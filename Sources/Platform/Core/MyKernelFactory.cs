@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core
 {
@@ -328,7 +329,7 @@ namespace GoodAI.Core
                     m_contexts[i].Dispose();
                     CreateContext(i);
 
-                    MyLog.WARNING.WriteLine("Dead context detected. Restart of BrainSimulator is needed.");
+                    Log.Warn(this.GetType(), "Dead context detected. Restart of BrainSimulator is needed.");
                 }
             }
         }

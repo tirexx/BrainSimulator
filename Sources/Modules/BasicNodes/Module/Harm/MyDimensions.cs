@@ -1,5 +1,6 @@
 ﻿using GoodAI.Core.Utils;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -44,7 +45,7 @@ namespace GoodAI.Modules.Harm
 
             if (this.IsLast())
             {
-                MyLog.ERROR.WriteLine("last dimension reached, I contain only numbers!");
+                Log.Error(this.GetType(), "last dimension reached, I contain only numbers!");
                 return null;
             }
             if (m_myDims == null)
@@ -76,7 +77,7 @@ namespace GoodAI.Modules.Harm
         {
             if (!this.IsLast())
             {
-                MyLog.ERROR.WriteLine("This dimension is not last, will not get a value!");
+                Log.Error(this.GetType(), "This dimension is not last, will not get a value!");
                 return DEF_VAL;
             }
             return m_myVal;
@@ -86,7 +87,7 @@ namespace GoodAI.Modules.Harm
         {
             if (!this.IsLast())
             {
-                MyLog.ERROR.WriteLine("This dimension is not last, will not set a value!");
+                Log.Error(this.GetType(), "This dimension is not last, will not set a value!");
                 return;
             }
             this.m_myVal = val;

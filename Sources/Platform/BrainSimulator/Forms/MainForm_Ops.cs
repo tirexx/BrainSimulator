@@ -18,6 +18,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using GoodAI.Platform.Core.Logging;
 using WeifenLuo.WinFormsUI.Docking;
 using YAXLib;
 
@@ -75,7 +76,7 @@ namespace GoodAI.BrainSimulator.Forms
 
         private void SaveProject(string fileName)
         {
-            MyLog.INFO.WriteLine("Saving project: " + fileName);
+            Log.Info(this.GetType(), "Saving project: " + fileName);
             try
             {
                 string fileContent = GetSerializedProject(fileName);
@@ -91,7 +92,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Project saving failed: " + e.Message);
+                Log.Error(this.GetType(), "Project saving failed: " + e.Message);
             }
         }
 
@@ -105,8 +106,8 @@ namespace GoodAI.BrainSimulator.Forms
 
         private void OpenProject(string fileName)
         {
-            MyLog.INFO.WriteLine("--------------");
-            MyLog.INFO.WriteLine("Loading project: " + fileName);
+            Log.Info(this.GetType(), "--------------");
+            Log.Info(this.GetType(), "Loading project: " + fileName);
 
             string content;
 
@@ -120,7 +121,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Project loading failed: " + e.Message);
+                Log.Error(this.GetType(), "Project loading failed: " + e.Message);
                 throw new ProjectLoadingException("Project loading failed.", e);
             }
 
@@ -153,7 +154,7 @@ namespace GoodAI.BrainSimulator.Forms
 
         private void ImportProject(string fileName, bool showObservers = false)
         {
-            MyLog.INFO.WriteLine("Importing project: " + fileName);
+            Log.Info(this.GetType(), "Importing project: " + fileName);
 
             try
             {
@@ -196,7 +197,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Project import failed: " + e.Message);
+                Log.Error(this.GetType(), "Project import failed: " + e.Message);
             }
         }
 
@@ -281,7 +282,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Error creating observer: " + e.Message);
+                Log.Error(this.GetType(), "Error creating observer: " + e.Message);
             }
         }
 
@@ -291,7 +292,7 @@ namespace GoodAI.BrainSimulator.Forms
 
             if (isPlot && !(memoryBlock is MyMemoryBlock<float>))
             {
-                MyLog.ERROR.WriteLine("Plot observers are not allowed for non-float memory blocks");
+                Log.Error(this.GetType(), "Plot observers are not allowed for non-float memory blocks");
                 return;
             }
 
@@ -321,7 +322,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Error creating observer: " + e.Message);
+                Log.Error(this.GetType(), "Error creating observer: " + e.Message);
             }
         }
 
@@ -567,7 +568,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception ex)
             {
-                MyLog.WARNING.WriteLine("Unable to restore views layout (using default): " + ex.Message);
+                Log.Warn(this.GetType(), "Unable to restore views layout (using default): " + ex.Message);
 
                 return false;
             }
@@ -645,7 +646,7 @@ namespace GoodAI.BrainSimulator.Forms
             ConsoleView = new ConsoleForm(this);
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName();
-            MyLog.INFO.WriteLine(assemblyName.Name + " version " + assemblyName.Version);
+            Log.Info(this.GetType(), assemblyName.Name + " version " + assemblyName.Version);
 
 
             MyConfiguration.SetupModuleSearchPath();
@@ -873,7 +874,7 @@ namespace GoodAI.BrainSimulator.Forms
         {            
             if (SimulationHandler.State == MySimulationHandler.SimulationState.STOPPED)
             {
-                MyLog.INFO.WriteLine("--------------");
+                Log.Info(this.GetType(), "--------------");
                 bool anyOutputChanged = SimulationHandler.UpdateMemoryModel();
 
                 // TODO: move this out.
@@ -903,12 +904,12 @@ namespace GoodAI.BrainSimulator.Forms
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Simulation cannot be started! Exception occured: " + e.Message);
+                        Log.Error(this.GetType(), "Simulation cannot be started! Exception occured: " + e.Message);
                     }
                 }
                 else
                 {                
-                    MyLog.ERROR.WriteLine("Simulation cannot be started! Validation failed.");
+                    Log.Error(this.GetType(), "Simulation cannot be started! Validation failed.");
                     OpenFloatingOrActivate(ValidationView);
                 }
             }
@@ -920,7 +921,7 @@ namespace GoodAI.BrainSimulator.Forms
                 }
                 catch (Exception e)
                 {
-                    MyLog.ERROR.WriteLine("Simulation cannot be started! Exception occured: " + e.Message);
+                    Log.Error(this.GetType(), "Simulation cannot be started! Exception occured: " + e.Message);
                 }
             }           
         }
@@ -1060,12 +1061,12 @@ namespace GoodAI.BrainSimulator.Forms
                     }
                     else
                     {
-                        MyLog.WARNING.WriteLine("Copying is not allowed");
+                        Log.Warn(this.GetType(), "Copying is not allowed");
                     }
                 }
                 else
                 {
-                    MyLog.WARNING.WriteLine("Selection is empty");
+                    Log.Warn(this.GetType(), "Selection is empty");
                 }
             }
         }
@@ -1136,7 +1137,7 @@ namespace GoodAI.BrainSimulator.Forms
                 }
                 catch (Exception e)
                 {
-                    MyLog.ERROR.WriteLine("Paste failed: " + e.Message);
+                    Log.Error(this.GetType(), "Paste failed: " + e.Message);
                 }
             }
         }

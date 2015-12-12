@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.BrainSimulator.Utils
 {
@@ -32,7 +33,7 @@ namespace GoodAI.BrainSimulator.Utils
             }
             catch (Exception ex)
             {
-                MyLog.WARNING.WriteLine("XML documentation loading failed for assembly: " + assembly.FullName + "\n\t" + ex.Message);
+                Log.Warn(this.GetType(), "XML documentation loading failed for assembly: " + assembly.FullName + "\n\t" + ex.Message);
             }
         }
 
@@ -123,7 +124,7 @@ namespace GoodAI.BrainSimulator.Utils
             }
             else
             {
-                MyLog.ERROR.WriteLine("Documentation for \"" + forType.Name + "\" not found.");
+                Log.Error(typeof(MyDocProvider), "Documentation for \"" + forType.Name + "\" not found.");
             }
         }
     }

@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using GoodAI.Core.Utils;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Project
 {
@@ -26,7 +27,7 @@ namespace GoodAI.Core.Project
 
                 if (!Directory.Exists(dataStoragePath))
                 {
-                    MyLog.WARNING.WriteLine("No state data found, saving only zipped project file.");
+                    Log.Warn(typeof(ProjectLoader), "No state data found, saving only zipped project file.");
                     Directory.CreateDirectory(dataStoragePath);
                 }
 

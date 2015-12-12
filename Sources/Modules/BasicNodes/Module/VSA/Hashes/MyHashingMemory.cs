@@ -6,6 +6,7 @@ using GoodAI.Core.Utils;
 using GoodAI.Modules.Transforms;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.VSA.Hashes
@@ -149,7 +150,7 @@ namespace GoodAI.Modules.VSA.Hashes
                 if (DecayFactor != 1f)
                 {
                     if (DecayFactor > 1f)
-                        MyLog.WARNING.WriteLine("Decay factor on a HashingMemoryNode that is greater than one is suspicious...");
+                        Log.Warn(this.GetType(), "Decay factor on a HashingMemoryNode that is greater than one is suspicious...");
 
                     _polynomialFuncKernel = MyKernelFactory.Instance.Kernel(nGPU, @"Transforms\TransformKernels", "PolynomialFunctionKernel");
                     _polynomialFuncKernel.SetupExecution(Memory.Count);

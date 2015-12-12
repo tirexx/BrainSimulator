@@ -12,6 +12,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using GoodAI.Modules.Transforms;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Join
@@ -44,7 +45,7 @@ namespace GoodAI.Modules.Join
         public void Run(MyStackingOperation operation, MyMemoryBlock<float> output, params MyMemoryBlock<float>[] inputs)
         {
             if (inputs == null)
-                MyLog.WARNING.WriteLine("No inputs for stacking operation to run on. Owner: " + m_caller.Name);
+                Log.Warn(this.GetType(), "No inputs for stacking operation to run on. Owner: " + m_caller.Name);
             else
                 Run(operation, output, inputs.AsEnumerable());
         }
@@ -53,7 +54,7 @@ namespace GoodAI.Modules.Join
         {
             if (inputs == null || !inputs.Any())
             {
-                MyLog.WARNING.WriteLine("No inputs for stacking operation to run on. Owner: " + m_caller.Name);
+                Log.Warn(this.GetType(), "No inputs for stacking operation to run on. Owner: " + m_caller.Name);
                 return;
             }
 
@@ -117,7 +118,7 @@ namespace GoodAI.Modules.Join
 
             if ((operation & m_operations) == 0)
             {
-                MyLog.WARNING.WriteLine("Trying to execute an uninitialized stacking operation. Owner: " + m_caller.Name);
+                Log.Warn(this.GetType(), "Trying to execute an uninitialized stacking operation. Owner: " + m_caller.Name);
                 return false;
             }
 

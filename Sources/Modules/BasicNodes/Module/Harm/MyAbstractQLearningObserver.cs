@@ -7,6 +7,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.ComponentModel;
 using System.Drawing;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Observers
@@ -101,7 +102,7 @@ namespace GoodAI.Modules.Observers
             {
                 if (SizeChanged())
                 {
-                    MyLog.DEBUG.WriteLine("Observer: you are trying to display too big data!"
+                    Log.Debug(this.GetType(), "Observer: you are trying to display too big data!"
                         + " the matrix size is: " + m_qMatrix.GetLength(0) + "x" + m_qMatrix.GetLength(1)
                         + ", max allowed size is: " + QMATRIX_MAX_SIZE);
                 }

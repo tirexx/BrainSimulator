@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Utils
 {
@@ -46,7 +47,7 @@ namespace GoodAI.Core.Utils
             }
             catch (Exception e)
             {
-                MyLog.WARNING.WriteLine("Image resource '" + resourceName + "' load failed from assembly " + assembly.GetName().Name + "."); 
+                Log.Warn(typeof(MyResources), "Image resource '" + resourceName + "' load failed from assembly " + assembly.GetName().Name + "."); 
                 return null;
             }
         }
@@ -71,7 +72,7 @@ namespace GoodAI.Core.Utils
             }
             catch (Exception e)
             {
-                MyLog.WARNING.WriteLine("Text resource '" + resourceName + "' load failed.");
+                Log.Warn(typeof(MyResources), "Text resource '" + resourceName + "' load failed.");
                 return string.Empty;
             }
         }
@@ -90,7 +91,7 @@ namespace GoodAI.Core.Utils
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("PTX resource '" + resourceName + "' load failed from assembly " + assembly.GetName().Name + ".");
+                Log.Error(typeof(MyResources), "PTX resource '" + resourceName + "' load failed from assembly " + assembly.GetName().Name + ".");
                 return null;
             }                
         }

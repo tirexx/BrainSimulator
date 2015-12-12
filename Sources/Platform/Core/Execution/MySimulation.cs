@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using GoodAI.Platform.Core.Logging;
 using GoodAI.Platform.Core.Utils;
 
 namespace GoodAI.Core.Execution
@@ -239,7 +240,7 @@ namespace GoodAI.Core.Execution
 
                 if (doAutoSave)
                 {
-                    MyLog.INFO.WriteLine("Autosave (" + SimulationStep + " steps)");
+                    Log.Info(this.GetType(), "Autosave (" + SimulationStep + " steps)");
                 }
 
                 if (NodePartitioning == null)

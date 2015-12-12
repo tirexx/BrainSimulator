@@ -1,6 +1,7 @@
 ﻿using GoodAI.Core.Utils;
 using System;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -71,7 +72,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= am.GetNoActions() || index < 0)
             {
-                MyLog.ERROR.WriteLine("index out of range");
+                Log.Error(this.GetType(), "index out of range");
                 return;
             }
             if (!isMonitored.ContainsKey(index))
@@ -84,12 +85,12 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= am.GetNoActions() || index < 0)
             {
-                MyLog.ERROR.WriteLine("index out of range");
+                Log.Error(this.GetType(), "index out of range");
                 return;
             }
             if (!isMonitored.ContainsKey(index))
             {
-                MyLog.ERROR.WriteLine("trying to remove action that is not monitored");
+                Log.Error(this.GetType(), "trying to remove action that is not monitored");
                 return;
             }
             isMonitored.Remove(index);
@@ -108,7 +109,7 @@ namespace GoodAI.Modules.Harm
         {
             if (!this.isMonitored[index])
             {
-                MyLog.DEBUG.WriteLine("Warning: you want to register action that is not monitored");
+                Log.Debug(this.GetType(), "Warning: you want to register action that is not monitored");
                 return;
             }
             this.PushNewChange(index);
@@ -212,7 +213,7 @@ namespace GoodAI.Modules.Harm
                         output += i + ", ";
                     }
                 }
-                MyLog.DEBUG.WriteLine(output);
+                Log.Debug(this.GetType(), output);
             }
         }
     }
@@ -301,7 +302,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= this.isMonitored.Length || index < 0)
             {
-                MyLog.ERROR.WriteLine("index out of range");
+                Log.Error(this.GetType(), "index out of range");
             }
             this.isMonitored[index] = true;
         }
@@ -310,7 +311,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= this.isMonitored.Length || index < 0)
             {
-                MyLog.ERROR.WriteLine("index out of range");
+                Log.Error(this.GetType(), "index out of range");
             }
             this.isMonitored[index] = false;
         }

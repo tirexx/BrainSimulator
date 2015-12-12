@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.XPath;
-
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Utils
@@ -35,7 +35,7 @@ namespace GoodAI.Core.Utils
                 }
                 else
                 {
-                    MyLog.ERROR.WriteLine("UsedModules section corrupted at: " + moduleElm.ToString());
+                    Log.Error(typeof(MyUsedModuleInfo), "UsedModules section corrupted at: " + moduleElm.ToString());
                 }
             }
 

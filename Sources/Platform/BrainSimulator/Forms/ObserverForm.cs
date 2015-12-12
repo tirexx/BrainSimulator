@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using GoodAI.Platform.Core.Logging;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace GoodAI.BrainSimulator.Forms
@@ -157,7 +158,7 @@ namespace GoodAI.BrainSimulator.Forms
                 }
                 catch (Exception exc)
                 {
-                    MyLog.ERROR.WriteLine("Observer update failed: " + exc.Message);
+                    Log.Error(this.GetType(), "Observer update failed: " + exc.Message);
                 }
                 finally
                 {
@@ -380,7 +381,7 @@ namespace GoodAI.BrainSimulator.Forms
             snapshot.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
             snapshot.Dispose();
 
-            MyLog.INFO.WriteLine("Snapshot saved to \"" + filename + "\"");
+            Log.Info(this.GetType(), "Snapshot saved to \"" + filename + "\"");
         }
 
         private Point m_lastMousePosition;

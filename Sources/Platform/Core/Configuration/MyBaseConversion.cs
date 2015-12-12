@@ -3,6 +3,7 @@ using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Configuration
 {
@@ -15,7 +16,7 @@ namespace GoodAI.Core.Configuration
         {
             if (xmlVersion < CurrentVersion)
             {
-                MyLog.INFO.WriteLine(Module.File.Name + ": Conversion is needed (stored version: " + xmlVersion + ", current version: " + CurrentVersion + ").");
+                Log.Info(this.GetType(), Module.File.Name + ": Conversion is needed (stored version: " + xmlVersion + ", current version: " + CurrentVersion + ").");
 
                 Type type = this.GetType();
                 bool errorOccured = false;
@@ -30,29 +31,29 @@ namespace GoodAI.Core.Configuration
                     if (methodInfo != null)
                     {
                         convertedXml = (string)methodInfo.Invoke(null, new object[] { convertedXml });
-                        MyLog.INFO.WriteLine("Conversion to version " + (i + 1) + " finished.");
+                        Log.Info(this.GetType(), "Conversion to version " + (i + 1) + " finished.");
                     }
                     else
                     {
-                        MyLog.ERROR.WriteLine("Conversion between versions " + i + " and " + (i + 1) + " failed: Method \"" + methodName + "\" is missing in (CustomModels)\\Conversions.MyConversions.");
+                        Log.Error(this.GetType(), "Conversion between versions " + i + " and " + (i + 1) + " failed: Method \"" + methodName + "\" is missing in (CustomModels)\\Conversions.MyConversions.");
                         errorOccured = true;
                     }
                 }
 
                 if (errorOccured)
                 {
-                    MyLog.INFO.WriteLine(Module.File.Name + ": Automatic conversion failed. Project might be in inconsistent state.");
+                    Log.Info(this.GetType(), Module.File.Name + ": Automatic conversion failed. Project might be in inconsistent state.");
                 }
                 else
                 {
-                    MyLog.INFO.WriteLine(Module.File.Name + ": Automatic conversion finished successfuly. Save is needed.");                    
+                    Log.Info(this.GetType(), Module.File.Name + ": Automatic conversion finished successfuly. Save is needed.");                    
                 }
 
                 return convertedXml;
             }
             else if (xmlVersion > CurrentVersion)
             {
-                MyLog.WARNING.WriteLine(Module.File.Name + ": Project used newer version of module.");                
+                Log.Warn(this.GetType(), Module.File.Name + ": Project used newer version of module.");                
             }
 
             return xml;
@@ -71,7 +72,7 @@ namespace GoodAI.Core.Configuration
 
             if (!xml.Equals(result))
             {
-                MyLog.INFO.WriteLine("Old module names found and converted. Save is needed.");
+                Log.Info(typeof(MyBaseConversion), "Old module names found and converted. Save is needed.");
             }
 
             return result;
@@ -85,7 +86,7 @@ namespace GoodAI.Core.Configuration
 
             if (m.Success)
             {
-                MyLog.INFO.WriteLine("Old document versioning found. Converting...");
+                Log.Info(typeof(MyBaseConversion), "Old document versioning found. Converting...");
 
                 fileVersion = int.Parse(m.Value.Split('"')[3]);
 

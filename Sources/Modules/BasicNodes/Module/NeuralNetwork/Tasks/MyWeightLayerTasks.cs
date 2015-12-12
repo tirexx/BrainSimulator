@@ -4,6 +4,7 @@ using GoodAI.Core.Utils;
 using GoodAI.Modules.NeuralNetwork.Layers;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.NeuralNetwork.Tasks
@@ -75,7 +76,7 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
                     break;
 
                 default:
-                    MyLog.WARNING.WriteLine("No initialization distribution set.");
+                    Log.Warn(this.GetType(), "No initialization distribution set.");
                     return;
             }
         }
@@ -169,13 +170,13 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
 
             if (matchingNodes.Count == 0)
             {
-                MyLog.ERROR.WriteLine(Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because it was not found!");
+                Log.Error(this.GetType(), Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because it was not found!");
                 return;
             }
 
             if (matchingNodes.Count > 1)
             {
-                MyLog.ERROR.WriteLine(Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because there are multiple nodes with this name!");
+                Log.Error(this.GetType(), Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because there are multiple nodes with this name!");
                 return;
             }
 
@@ -183,13 +184,13 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
 
             if (sourceLayer == null)
             {
-                MyLog.ERROR.WriteLine(Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because it is not a weight layer!");
+                Log.Error(this.GetType(), Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because it is not a weight layer!");
                 return;                    
             }
 
             if (sourceLayer.Weights.Count != Owner.Weights.Count || sourceLayer.Bias.Count != Owner.Bias.Count)
             {
-                MyLog.ERROR.WriteLine(Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because the sizes do not match!");
+                Log.Error(this.GetType(), Owner.Name + ": Cannot share weights with node " + SourceNodeName + " because the sizes do not match!");
                 return;
             }
 

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using GoodAI.Core.Execution;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Nodes
@@ -182,7 +183,7 @@ namespace GoodAI.Core.Nodes
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Task initialization: " + e.Message);
+                        Log.Error(this.GetType(), "Task initialization: " + e.Message);
                     }
 
                     task.GenericOwner = this;
@@ -192,7 +193,7 @@ namespace GoodAI.Core.Nodes
                 }
                 catch (Exception e)
                 {
-                    MyLog.ERROR.WriteLine("Automated task creation failed: " + e.Message);
+                    Log.Error(this.GetType(), "Automated task creation failed: " + e.Message);
                 }
             }
         }
@@ -242,7 +243,7 @@ namespace GoodAI.Core.Nodes
                 }
                 else 
                 {
-                    MyLog.WARNING.WriteLine("Unexpected task found. (" + this.GetType().Name + "->" + task.PropertyName + ")");
+                    Log.Warn(this.GetType(), "Unexpected task found. (" + this.GetType().Name + "->" + task.PropertyName + ")");
                     m_tasks.Remove(task.PropertyName);
                 }
             }

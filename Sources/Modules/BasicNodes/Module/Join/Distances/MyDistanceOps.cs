@@ -11,6 +11,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using GoodAI.Modules.Transforms;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Join
@@ -148,7 +149,7 @@ namespace GoodAI.Modules.Join
         {
             if (m_temp == null)
             {
-                MyLog.ERROR.WriteLine("Init the object with a valid temp block of size at least one to enable RunReturn.");
+                Log.Error(this.GetType(), "Init the object with a valid temp block of size at least one to enable RunReturn.");
                 return float.NaN;
             }
 
@@ -184,7 +185,7 @@ namespace GoodAI.Modules.Join
 
             if ((operation & m_operations) == 0)
             {
-                MyLog.WARNING.WriteLine("Trying to execute an uninitialized distance operation. Owner: " + m_caller.Name);
+                Log.Warn(this.GetType(), "Trying to execute an uninitialized distance operation. Owner: " + m_caller.Name);
                 return false;
             }
 

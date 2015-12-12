@@ -3,6 +3,7 @@ using GoodAI.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Nodes
@@ -272,7 +273,7 @@ namespace GoodAI.Core.Nodes
                 }
                 catch (Exception e)
                 {
-                    MyLog.ERROR.WriteLine("Exception occured while validating " + node.Name + ": " + e.Message);
+                    Log.Error(this.GetType(), "Exception occured while validating " + node.Name + ": " + e.Message);
                     validator.AddError(node, "Exception occured while validating: " + e.Message);
                 }
             });

@@ -8,6 +8,7 @@ using GoodAI.Modules.NeuralNetwork.Tasks;
 using ManagedCuda.BasicTypes;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 
 namespace CustomModels.NeuralNetwork.Tasks
 {
@@ -44,7 +45,7 @@ namespace CustomModels.NeuralNetwork.Tasks
                 Owner.OutputWidth, Owner.OutputWidth * Owner.OutputHeight,
                 Owner.Neurons
             );
-            MyLog.DEBUG.WriteLine("Pooling.");
+            Log.Debug(this.GetType(), "Pooling.");
         }
     }
 
@@ -70,7 +71,7 @@ namespace CustomModels.NeuralNetwork.Tasks
 
         public override void Execute() //Task execution
         {
-            MyLog.DEBUG.WriteLine("Pooling backward.");
+            Log.Debug(this.GetType(), "Pooling backward.");
             
             // pointer to previous layer
             MyNode node = Owner.Input.Owner;
@@ -124,7 +125,7 @@ namespace CustomModels.NeuralNetwork.Tasks
 
             if (Owner.Input == null)
             {
-                MyLog.ERROR.WriteLine("MyPadImageTask error: Input to " + Owner + " is null.");
+                Log.Error(this.GetType(), "MyPadImageTask error: Input to " + Owner + " is null.");
                 return;
             }
             Owner.PaddedImage.Fill(0);
@@ -163,7 +164,7 @@ namespace CustomModels.NeuralNetwork.Tasks
 
         public override void Execute() //Task execution
         {
-            MyLog.DEBUG.WriteLine("Convolution forward.");
+            Log.Debug(this.GetType(), "Convolution forward.");
             m_kernel.SetupExecution(Owner.Output.Count);
 
             // use the input image as it is
@@ -228,7 +229,7 @@ namespace CustomModels.NeuralNetwork.Tasks
 
         public override void Execute()
         {
-            MyLog.DEBUG.WriteLine("Convolution backward.");
+            Log.Debug(this.GetType(), "Convolution backward.");
 
             // pointer to previous layer
             MyNode node = Owner.Input.Owner;
@@ -318,10 +319,10 @@ namespace CustomModels.NeuralNetwork.Tasks
             if (task is MyAbstractBackpropTask)
                 backpropTask = task as MyAbstractBackpropTask;
             else
-                MyLog.ERROR.WriteLine("Backprop task does not derive from MyAbstractBackpropTask in " + Owner.ParentNetwork);
+                Log.Error(this.GetType(), "Backprop task does not derive from MyAbstractBackpropTask in " + Owner.ParentNetwork);
 
             if (backpropTask == null)
-                MyLog.ERROR.WriteLine("Undetermined backprop task in " + Owner.ParentNetwork);
+                Log.Error(this.GetType(), "Undetermined backprop task in " + Owner.ParentNetwork);
             else
             {
                 backpropTask.Execute(Owner); // call the group task to do the backpropagation

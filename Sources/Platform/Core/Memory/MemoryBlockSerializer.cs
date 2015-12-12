@@ -3,6 +3,7 @@ using GoodAI.Core.Utils;
 using ManagedCuda.BasicTypes;
 using System;
 using System.IO;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Memory
 {
@@ -25,11 +26,11 @@ namespace GoodAI.Core.Memory
             if (TempDataExists(project))
             {
                 Directory.Delete(GetTempStorage(project), true);
-                MyLog.INFO.WriteLine(project.Name + ": Temporal data deleted.");
+                Log.Info(typeof(MyMemoryBlockSerializer), project.Name + ": Temporal data deleted.");
             }
             else
             {
-                MyLog.WARNING.WriteLine(project.Name + ": No temporal data to delete.");
+                Log.Warn(typeof(MyMemoryBlockSerializer), project.Name + ": No temporal data to delete.");
             }
         }
 
@@ -38,11 +39,11 @@ namespace GoodAI.Core.Memory
             if (TempDataExists(node))
             {
                 Directory.Delete(GetTempStorage(node.Owner) + "\\" + GetNodeFolder(node), true);
-                MyLog.INFO.WriteLine(node.Name + ": Temporal data deleted.");
+                Log.Info(typeof(MyMemoryBlockSerializer), node.Name + ": Temporal data deleted.");
             }
             else
             {
-                MyLog.WARNING.WriteLine(node.Name + ": No temporal data to delete.");
+                Log.Warn(typeof(MyMemoryBlockSerializer), node.Name + ": No temporal data to delete.");
             }
         }
 
@@ -146,7 +147,7 @@ namespace GoodAI.Core.Memory
             }
             catch (Exception e)
             {
-                MyLog.WARNING.WriteLine("Memory block loading failed (" + memoryBlock.Owner.Name + "." + memoryBlock.Name + "): " + e.Message);
+                Log.Warn(this.GetType(), "Memory block loading failed (" + memoryBlock.Owner.Name + "." + memoryBlock.Name + "): " + e.Message);
             }            
         }
 
@@ -180,7 +181,7 @@ namespace GoodAI.Core.Memory
             }
             catch (Exception e)
             {
-                MyLog.WARNING.WriteLine("Memory block saving failed (" + memoryBlock.Owner.Name + "." + memoryBlock.Name + "): " + e.Message);
+                Log.Warn(this.GetType(), "Memory block saving failed (" + memoryBlock.Owner.Name + "." + memoryBlock.Name + "): " + e.Message);
             } 
         }
     }

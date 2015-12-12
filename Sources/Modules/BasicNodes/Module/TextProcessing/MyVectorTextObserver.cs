@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using YAXLib;
 using GoodAI.Core.Task;
 using GoodAI.Core;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.LTM
 {
@@ -207,7 +208,7 @@ namespace GoodAI.Modules.LTM
 
             if (m_lowerThreshold >= m_upperThreshold)
             {
-                MyLog.ERROR.WriteLine("MyVectorTextObserver - LowerThreshold needs to be lower than UpperThreshold.");
+                Log.Error(this.GetType(), "MyVectorTextObserver - LowerThreshold needs to be lower than UpperThreshold.");
             }
 
 
@@ -269,7 +270,7 @@ namespace GoodAI.Modules.LTM
                         m_deviceBuffer[i * m_cols + j] = MyStringConversionsClass.StringToDigitIndexes(WeigthsString[j]);
                     }
 
-                    // MyLog.DEBUG.WriteLine("wText : " + WeigthsString);
+                    // Log.Debug(this.GetType(), "wText : " + WeigthsString);
                 }
 
 
@@ -279,7 +280,7 @@ namespace GoodAI.Modules.LTM
                 {
                     if (!displayedWarning)
                     {
-                        MyLog.WARNING.WriteLine("Text lines (length " + numberOfColumns + ") cannot fit into MyVectorTextObserver window width (" + windowWidth + "), they will be cropped.");
+                        Log.Warn(this.GetType(), "Text lines (length " + numberOfColumns + ") cannot fit into MyVectorTextObserver window width (" + windowWidth + "), they will be cropped.");
                         displayedWarning = true;
                     }
                     numberOfColumns = windowWidth;

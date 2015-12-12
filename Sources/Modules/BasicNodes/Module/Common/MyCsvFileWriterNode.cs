@@ -11,6 +11,7 @@ using System.Text;
 using System.Globalization;
 using System.Windows.Forms.Design;
 using GoodAI.Core.Execution;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Common
@@ -165,7 +166,7 @@ namespace GoodAI.Modules.Common
             if (Stream != null)
                 return;
 
-            MyLog.DEBUG.WriteLine("Opening the CSV file handle");
+            Log.Debug(this.GetType(), "Opening the CSV file handle");
 
 
             // If the file was supposed to be overwritten, but that already happened in this simulation, append.

@@ -5,6 +5,7 @@ using GoodAI.Core.Utils;
 using GoodAI.Modules.Transforms;
 using System.ComponentModel;
 using System;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Retina
@@ -73,7 +74,7 @@ namespace GoodAI.Modules.Retina
             {
                 if (Owner.NumberPupilSamples > 1)
                 {
-                    MyLog.WARNING.WriteLine("MyFocuser:MyUnfocusTask deoes not support multiple pupils input!");
+                    Log.Warn(this.GetType(), "MyFocuser:MyUnfocusTask deoes not support multiple pupils input!");
                 }
                 else
                 {
@@ -107,7 +108,7 @@ namespace GoodAI.Modules.Retina
             {
                 if (Owner.NumberPupilSamples > 1)
                 {
-                    MyLog.WARNING.WriteLine("MyFocuser:MyRetinaUnfocusTask deoes not support multiple pupils input! (so far)");
+                    Log.Warn(this.GetType(), "MyFocuser:MyRetinaUnfocusTask deoes not support multiple pupils input! (so far)");
                 }
                 else
                 {

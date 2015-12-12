@@ -14,8 +14,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Task;
 using System.Text.RegularExpressions;
 using GoodAI.Core.Signals;
-
-
+using GoodAI.Platform.Core.Logging;
 
 
 namespace GoodAI.Modules.LTM
@@ -175,11 +174,11 @@ namespace GoodAI.Modules.LTM
                 switch (Owner.InputType)
                 {
                     case UserInput.UserText:
-                        MyLog.DEBUG.WriteLine("Reading input for MyAssociativeWorld... from UserText.");
+                        Log.Debug(this.GetType(), "Reading input for MyAssociativeWorld... from UserText.");
                         Owner.m_text = Owner.UserText;
                         break;
                     case UserInput.UserFile:
-                        MyLog.DEBUG.WriteLine("Reading input for MyAssociativeWorld... from file " + Owner.UserFile + ".");
+                        Log.Debug(this.GetType(), "Reading input for MyAssociativeWorld... from file " + Owner.UserFile + ".");
                         Owner.m_text = "";
 
                         if (File.Exists(Owner.UserFile))
@@ -192,7 +191,7 @@ namespace GoodAI.Modules.LTM
                         }
                         else
                         {
-                            MyLog.ERROR.WriteLine("Cannot read file " + Owner.UserFile);
+                            Log.Error(this.GetType(), "Cannot read file " + Owner.UserFile);
                         }
                         break;
                 }
@@ -219,7 +218,7 @@ namespace GoodAI.Modules.LTM
 
                     if (Owner.m_parsedText == null)
                     {
-                        MyLog.ERROR.WriteLine("No input data for MyAssociationWorld!");
+                        Log.Error(this.GetType(), "No input data for MyAssociationWorld!");
                         return;
                     }
 
@@ -232,8 +231,8 @@ namespace GoodAI.Modules.LTM
 
                     id = id % Owner.m_parsedText.Length;
 
-                    //   MyLog.DEBUG.WriteLine("Id = " + id + " / " + Owner.m_parsedText.Length);
-                    // MyLog.DEBUG.WriteLine("str = " + Owner.m_parsedText[id]);
+                    //   Log.Debug(this.GetType(), "Id = " + id + " / " + Owner.m_parsedText.Length);
+                    // Log.Debug(this.GetType(), "str = " + Owner.m_parsedText[id]);
 
                     String[] elements = Regex.Split(Owner.m_parsedText[id], @"\s*,\s*"); //spliting expression is any number of white spaces, comma, and again any number of white spaces
 
@@ -245,16 +244,16 @@ namespace GoodAI.Modules.LTM
                         else
                             message = "many";
 
-                        MyLog.WARNING.WriteLine("Too " + message + " (" + elements.Length + " instead of 3 or 4) elements in input line '" + Owner.m_parsedText[id] + "' for " + Owner.Name + ". Output will be empty.");
+                        Log.Warn(this.GetType(), "Too " + message + " (" + elements.Length + " instead of 3 or 4) elements in input line '" + Owner.m_parsedText[id] + "' for " + Owner.Name + ". Output will be empty.");
                         return;
 
                     }
 
 
-                    MyLog.DEBUG.WriteLine("Id = " + id + " / " + Owner.m_parsedText.Length);
-                    MyLog.DEBUG.WriteLine("conc1 = " + elements[0]);
-                    MyLog.DEBUG.WriteLine("conc2 = " + elements[1]);
-                    MyLog.DEBUG.WriteLine("relation = " + elements[2]);
+                    Log.Debug(this.GetType(), "Id = " + id + " / " + Owner.m_parsedText.Length);
+                    Log.Debug(this.GetType(), "conc1 = " + elements[0]);
+                    Log.Debug(this.GetType(), "conc2 = " + elements[1]);
+                    Log.Debug(this.GetType(), "relation = " + elements[2]);
 
                     if (elements.Length == 3) //input file does not contain relation strength
                     {
@@ -268,12 +267,12 @@ namespace GoodAI.Modules.LTM
                         }
                         catch
                         {
-                            MyLog.WARNING.WriteLine(Owner.Name + " expects the fourth element in the input line '" + Owner.m_parsedText[id] + "' to be a number.");
+                            Log.Warn(this.GetType(), Owner.Name + " expects the fourth element in the input line '" + Owner.m_parsedText[id] + "' to be a number.");
                             Owner.RelationStrength.Host[0] = float.NaN;
                         }
 
                     }
-                    MyLog.DEBUG.WriteLine("relation strength = " + Owner.RelationStrength.Host[0]);
+                    Log.Debug(this.GetType(), "relation strength = " + Owner.RelationStrength.Host[0]);
 
 
                     String elem1 = elements[0].PadRight(Owner.TextWidth);
@@ -292,7 +291,7 @@ namespace GoodAI.Modules.LTM
                     Owner.Concept2.SafeCopyToDevice();
                     Owner.Relation.SafeCopyToDevice();
 
-                    // MyLog.DEBUG.WriteLine("CCC_" + concept + "_CCC");
+                    // Log.Debug(this.GetType(), "CCC_" + concept + "_CCC");
 
                     Owner.RelationStrength.SafeCopyToDevice();
                 }

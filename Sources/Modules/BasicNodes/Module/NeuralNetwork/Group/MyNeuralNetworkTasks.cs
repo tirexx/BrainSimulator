@@ -14,6 +14,7 @@ using System.Linq;
 using YAXLib;
 using System.Reflection;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.NeuralNetwork.Group
 {
@@ -154,12 +155,12 @@ namespace GoodAI.Modules.NeuralNetwork.Group
     {
         public virtual void Execute(MyAbstractLayer layer)
         {
-            MyLog.ERROR.WriteLine("No method provided to backpropagate MyAbstractLayer " + layer + " in " + Owner);
+            Log.Error(this.GetType(), "No method provided to backpropagate MyAbstractLayer " + layer + " in " + Owner);
         }
 
         public virtual void Execute(MyAbstractWeightLayer layer)
         {
-            MyLog.ERROR.WriteLine("No method provided to backpropagate MyAbstractWeightLayer " + layer + " in " + Owner);
+            Log.Error(this.GetType(), "No method provided to backpropagate MyAbstractWeightLayer " + layer + " in " + Owner);
         }
 
         public void ComputeWeightGradientSum(MyAbstractWeightLayer layer)
@@ -218,7 +219,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
         //Task execution - should be called with a parameter
         public override void Execute()
         {
-            //MyLog.ERROR.WriteLine("Please Execute MySGDTask with a layer parameter in " + Owner);
+            //Log.Error(this.GetType(), "Please Execute MySGDTask with a layer parameter in " + Owner);
         }
 
         public override void Execute(MyAbstractWeightLayer layer)
@@ -301,7 +302,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
             }
             else
             {
-                MyLog.ERROR.WriteLine("No method provided to SGD propagate a " + layer.Connection +
+                Log.Error(this.GetType(), "No method provided to SGD propagate a " + layer.Connection +
                                         " connected MyAbstractWeightLayer in " + Owner);
             }
         }
@@ -344,7 +345,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
         //Task execution
         public override void Execute()
         {
-            //MyLog.ERROR.WriteLine("Please Execute MyRMSTask with a layer parameter in " + Owner);
+            //Log.Error(this.GetType(), "Please Execute MyRMSTask with a layer parameter in " + Owner);
         }
 
         public override void Execute(MyAbstractWeightLayer layer)
@@ -407,7 +408,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
             }
             else
             {
-                MyLog.ERROR.WriteLine("No method provided to RMS propagate a " + layer.Connection +
+                Log.Error(this.GetType(), "No method provided to RMS propagate a " + layer.Connection +
                                       " connected MyAbstractWeightLayer in " + Owner);
             }
         }
@@ -444,7 +445,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
         //Task execution
         public override void Execute()
         {
-            //MyLog.ERROR.WriteLine("Please Execute Adadelta with a layer parameter in " + Owner);
+            //Log.Error(this.GetType(), "Please Execute Adadelta with a layer parameter in " + Owner);
         }
 
         public override void Execute(MyAbstractWeightLayer layer)
@@ -503,7 +504,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
             }
             else
             {
-                MyLog.ERROR.WriteLine("No method provided to Adadelta propagate a " + layer.Connection +
+                Log.Error(this.GetType(), "No method provided to Adadelta propagate a " + layer.Connection +
                                       " connected MyAbstractWeightLayer in " + Owner);
             }
         }
@@ -539,7 +540,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
     //    //Task execution
     //    public override void Execute()
     //    {
-    //        MyLog.ERROR.WriteLine("Please Execute MyvSGDfdTask with a layer parameter in " + Owner);
+    //        Log.Error(this.GetType(), "Please Execute MyvSGDfdTask with a layer parameter in " + Owner);
     //    }
 
     //    public override void Execute(MyAbstractWeightLayer layer)
@@ -586,7 +587,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
     //        }
     //        else
     //        {
-    //            MyLog.ERROR.WriteLine("No method provided to vSGD-fd propagate a " + layer.Connection + " connected MyAbstractWeightLayer in " + Owner);
+    //            Log.Error(this.GetType(), "No method provided to vSGD-fd propagate a " + layer.Connection + " connected MyAbstractWeightLayer in " + Owner);
     //        }
     //    }
 
@@ -810,7 +811,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
                 if (w >= Owner.TotalWeights)
                 {
                     if (w > Owner.TotalWeights)
-                        MyLog.ERROR.Write("w > Owner.TotalWeights"); // just for testing, this should never hit
+                        Log.Error(this.GetType(), "w > Owner.TotalWeights"); // just for testing, this should never hit
                     w = Owner.TotalWeights - 1; // this is just to make if safe, but it should never hit
                 }
 
@@ -853,7 +854,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
 
                             if (numericalGradient == 0)
                             {
-                                MyLog.DEBUG.WriteLine("t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " numerical gradient is 0.");
+                                Log.Debug(this.GetType(), "t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " numerical gradient is 0.");
                                 break; // continue to next sample
                             }
 
@@ -871,7 +872,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
                             float absoluteDiff = 0.0f;
                             if (analyticalGradient == 0)
                             {
-                                MyLog.DEBUG.WriteLine("t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " analytical gradient is 0.");
+                                Log.Debug(this.GetType(), "t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " analytical gradient is 0.");
                                 break; // continue to next sample
                             }
                             absoluteDiff = Math.Abs(numericalGradient - analyticalGradient);
@@ -887,7 +888,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
                                 maxDiffAnalyticalGrad = analyticalGradient;
                                 maxDiffNumericalGrad = numericalGradient;
                             }
-                            MyLog.DEBUG.WriteLine("t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " AG: " + analyticalGradient + " NG: " + numericalGradient + " diff: " + relativeDiff);
+                            Log.Debug(this.GetType(), "t: " + SimulationStep + " id: " + weightLayer.Id + " w" + w + ": " + weightLayer.Weights.Host[w] + " step: " + stepSize + " AG: " + analyticalGradient + " NG: " + numericalGradient + " diff: " + relativeDiff);
                             break; // continue to next sample
                         }
                     }
@@ -895,16 +896,16 @@ namespace GoodAI.Modules.NeuralNetwork.Group
 
                     // catch unmatched dice-rolls
                     if (layer == null)
-                        MyLog.ERROR.Write("GradientCheck task: Weight w " + w + " not found within " + Owner.TotalWeights + " total weights"); // just for testing, this should never hit
+                        Log.Error(this.GetType(), "GradientCheck task: Weight w " + w + " not found within " + Owner.TotalWeights + " total weights"); // just for testing, this should never hit
                 }
             }
             // handle the relativeDiff we just found
             if (maxRelDiff > ThresholdRelative && maxRelDiff > ThresholdAbsolute)
             {
-                MyLog.INFO.WriteLine("Gradient threshold exceeded on SimulationStep: " + SimulationStep);
-                MyLog.INFO.WriteLine("Max analytical vs numerical relative gradient difference found in layer id " + maxDiffLayer + " for weight " + maxDiffWeight + ": " + maxDiffWeightValue + " with Step size: " + maxDiffStepSize);
-                MyLog.INFO.WriteLine("Analytical gradient: " + maxDiffAnalyticalGrad + " Numerical gradient: " + maxDiffNumericalGrad + " Relative difference: " + maxRelDiff);
-                MyLog.INFO.WriteLine();
+                Log.Info(this.GetType(), "Gradient threshold exceeded on SimulationStep: " + SimulationStep);
+                Log.Info(this.GetType(), "Max analytical vs numerical relative gradient difference found in layer id " + maxDiffLayer + " for weight " + maxDiffWeight + ": " + maxDiffWeightValue + " with Step size: " + maxDiffStepSize);
+                Log.Info(this.GetType(), "Analytical gradient: " + maxDiffAnalyticalGrad + " Numerical gradient: " + maxDiffNumericalGrad + " Relative difference: " + maxRelDiff);
+                Log.Info(this.GetType(), string.Empty);
             }
         }
         //        // copy delta to host

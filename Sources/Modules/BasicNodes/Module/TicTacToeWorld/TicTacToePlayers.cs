@@ -1,6 +1,7 @@
 ﻿using GoodAI.Core.Utils;
 using System;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.TicTacToe
 {
@@ -23,7 +24,7 @@ namespace GoodAI.Modules.TicTacToe
         {
             if (currentState.Length != MyTicTacToeWorld.NO_POSITIONS)
             {
-                MyLog.ERROR.WriteLine("Incorrect length of current state, expected 9 positions");
+                Log.Error(this.GetType(), "Incorrect length of current state, expected 9 positions");
             }
         }
 
@@ -146,7 +147,7 @@ namespace GoodAI.Modules.TicTacToe
         {
             if (difficulty < 0.0 || difficulty > 1.0)
             {
-                MyLog.DEBUG.WriteLine("Warning, difficulty parameter should be in <0,1>");
+                Log.Debug(this.GetType(), "Warning, difficulty parameter should be in <0,1>");
 
                 if (difficulty < 0.0)
                     this.m_difficulty = 0.0f;
@@ -162,7 +163,7 @@ namespace GoodAI.Modules.TicTacToe
 
             if (moves.Count == 0)
             {
-                MyLog.ERROR.WriteLine("No move is possible!");
+                Log.Error(this.GetType(), "No move is possible!");
                 return 0;
             }
 
@@ -262,7 +263,7 @@ namespace GoodAI.Modules.TicTacToe
         {
             if (indexes.Length != 3)
             {
-                MyLog.ERROR.WriteLine("length of indexes has to be 3!");
+                Log.Error(this.GetType(), "length of indexes has to be 3!");
                 return 0;
             }
             int freeOnes = 0;

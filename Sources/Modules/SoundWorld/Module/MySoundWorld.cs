@@ -13,6 +13,7 @@ using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.SoundWorld
@@ -72,7 +73,7 @@ namespace GoodAI.SoundWorld
             {
                 if (value != "" && Path.GetExtension(value) != ".wav")
                 {
-                    MyLog.ERROR.WriteLine("Not supported file type!");
+                    Log.Error(this.GetType(), "Not supported file type!");
                     return;
                 }
                 
@@ -122,7 +123,7 @@ namespace GoodAI.SoundWorld
                             m_UserInput = InputTypeEnum.UserDefined;
                         else
                         {
-                            MyLog.INFO.WriteLine("First select path to custom audio file/s.");
+                            Log.Info(this.GetType(), "First select path to custom audio file/s.");
                             m_UserInput = InputTypeEnum.SampleSound;
                         }
                     break;
@@ -241,7 +242,7 @@ namespace GoodAI.SoundWorld
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Not a valid sound device!");
+                        Log.Error(this.GetType(), "Not a valid sound device!");
                     }
                     #endregion
                 }

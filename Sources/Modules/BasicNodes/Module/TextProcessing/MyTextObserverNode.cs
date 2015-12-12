@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 
@@ -119,7 +120,7 @@ namespace GoodAI.Modules.LTM
 
             if (WriteOnFilePath == null || WriteOnFilePath == "")
             {
-                MyLog.WARNING.WriteLine(Owner.Name + ": The Task 'Write On File' is selected, but the specified path for writing on File (FileWritePath) is empty, not writing on file");
+                Log.Warn(this.GetType(), Owner.Name + ": The Task 'Write On File' is selected, but the specified path for writing on File (FileWritePath) is empty, not writing on file");
             }
             else
             {
@@ -136,12 +137,12 @@ namespace GoodAI.Modules.LTM
 
                 if (ShowDebugInfo)
                 {
-                    MyLog.DEBUG.WriteLine("Data Length: " + Owner.Data.Host.Length);
-                    MyLog.DEBUG.WriteLine("Vector Length: " + VectorLength);
-                    MyLog.DEBUG.WriteLine("Number of Vectors: " + NumberOfVectors);
-                    MyLog.DEBUG.WriteLine("SplitRange: " + SplitRange);
-                    MyLog.DEBUG.WriteLine("Number of entries: " + Owner.Data.Host.Length / Owner.Data.ColumnHint);
-                    MyLog.DEBUG.WriteLine("Weights Length: " + Owner.Weights.Host.Length);
+                    Log.Debug(this.GetType(), "Data Length: " + Owner.Data.Host.Length);
+                    Log.Debug(this.GetType(), "Vector Length: " + VectorLength);
+                    Log.Debug(this.GetType(), "Number of Vectors: " + NumberOfVectors);
+                    Log.Debug(this.GetType(), "SplitRange: " + SplitRange);
+                    Log.Debug(this.GetType(), "Number of entries: " + Owner.Data.Host.Length / Owner.Data.ColumnHint);
+                    Log.Debug(this.GetType(), "Weights Length: " + Owner.Weights.Host.Length);
                 }
 
                 int consecutiveZeros = 0;
@@ -182,7 +183,7 @@ namespace GoodAI.Modules.LTM
                     for (int n = 0; n < NumberOfVectors; n++)
                     {
                         current = ReturnData.Substring(((j) + (n * (SplitRange))), SplitRange); //Divide chunk depending on the number of vectors
-                        //MyLog.DEBUG.WriteLine("Analyzing chunk " + n + ", Substring with index " + ((j) + (n * (SplitRange))) + " with length  " + SplitRange + " = " + current);
+                        //Log.Debug(this.GetType(), "Analyzing chunk " + n + ", Substring with index " + ((j) + (n * (SplitRange))) + " with length  " + SplitRange + " = " + current);
                         elements = Regex.Split(current, @"\s*,\s*");                            //Spliting expression is any number of white spaces, comma, and again any number of white spaces
                         elements[0] = elements[0].Trim();                                       //Trim formats the text so that there are no spaces from the word/s and the beginning and the end of the length
                         sbSplit.Append(elements[0]);
@@ -232,8 +233,8 @@ namespace GoodAI.Modules.LTM
 
                 if (ShowDebugInfo)
                 {
-                    MyLog.DEBUG.WriteLine("OutPut: " + Environment.NewLine + FormattedResult);
-                    MyLog.DEBUG.WriteLine("Number of lines that were deleted during the process because they contained the charachter ',,' = " + DeletedLines);
+                    Log.Debug(this.GetType(), "OutPut: " + Environment.NewLine + FormattedResult);
+                    Log.Debug(this.GetType(), "Number of lines that were deleted during the process because they contained the charachter ',,' = " + DeletedLines);
                 }
 
             }

@@ -6,6 +6,7 @@ using ManagedCuda;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Observers
@@ -77,7 +78,7 @@ namespace GoodAI.Core.Observers
                         m_boundMin = -1;
                         m_boundMax = 1;
                         m_boundPolicy = MyBoundPolicy.AUTO;
-                        MyLog.WARNING.WriteLine("At least one of the inherited bounds is infinite. Switch to AUTO mode.");
+                        Log.Warn(this.GetType(), "At least one of the inherited bounds is infinite. Switch to AUTO mode.");
                     }
                     else
                     {
@@ -479,7 +480,7 @@ namespace GoodAI.Core.Observers
 
             if (Count > nbCurvesMax)
             {
-                MyLog.ERROR.WriteLine("Number of displayed curved is too high (" + Count + ", max " + nbCurvesMax + ")");
+                Log.Error(this.GetType(), "Number of displayed curved is too high (" + Count + ", max " + nbCurvesMax + ")");
                 return;
             }
 
@@ -625,7 +626,7 @@ namespace GoodAI.Core.Observers
                 m_plotCurrentValueMax = BoundMax;
             }
 
-            //MyLog.DEBUG.WriteLine("min " + m_plotCurrentValueMin + " max " + m_plotCurrentValueMax);
+            //Log.Debug(this.GetType(), "min " + m_plotCurrentValueMin + " max " + m_plotCurrentValueMax);
 
 
             if (m_isDirty)

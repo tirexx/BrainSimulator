@@ -2,6 +2,7 @@
 using GoodAI.Modules.NeuralNetwork.Tasks;
 using GoodAI.Modules.RBM;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 
 namespace CustomModels.RBM.Tasks
 {
@@ -30,7 +31,7 @@ namespace CustomModels.RBM.Tasks
         public override void Execute()
         {
             Owner.Output.CopyFromMemoryBlock(Owner.Input, 0, 0, Owner.Neurons);
-            MyLog.DEBUG.WriteLine("RBM input layer forward");
+            Log.Debug(this.GetType(), "RBM input layer forward");
         }
     }
 
@@ -57,7 +58,7 @@ namespace CustomModels.RBM.Tasks
         public override void Execute()
         {
             Owner.Input.CopyFromMemoryBlock(Owner.Output, 0, 0, Owner.Neurons);
-            MyLog.DEBUG.WriteLine("RBM input layer backwards");
+            Log.Debug(this.GetType(), "RBM input layer backwards");
         }
     }
 }

@@ -6,6 +6,7 @@ using ManagedCuda.BasicTypes;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Memory
 {
@@ -103,7 +104,7 @@ namespace GoodAI.Core.Memory
 
                     if (!Unmanaged)
                     {       
-                        MyLog.DEBUG.WriteLine("Allocating: " + typeof(T).ToString() + ", " + Count * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T)));
+                        Log.Debug(this.GetType(), "Allocating: " + typeof(T).ToString() + ", " + Count * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T)));
                         Device[Owner.GPU] = new CudaDeviceVariable<T>(
                            MyKernelFactory.Instance.GetContextByGPU(Owner.GPU).AllocateMemory(
                            Count * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T))));

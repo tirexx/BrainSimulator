@@ -2,6 +2,7 @@
 using GoodAI.Core.Utils;
 using GoodAI.Modules.NeuralNetwork.Layers;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.NeuralNetwork.Tasks
@@ -58,12 +59,12 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
     {
         public override void Init(int nGPU)
         {
-            MyLog.DEBUG.WriteLine("Neural Task Init");
+            Log.Debug(this.GetType(), "Neural Task Init");
         }
 
         public override void Execute()
         {
-            MyLog.DEBUG.WriteLine("Neural Task Execute");
+            Log.Debug(this.GetType(), "Neural Task Execute");
         }
     }
 
@@ -71,12 +72,12 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
     {
         public override void Init(int nGPU)
         {
-            MyLog.DEBUG.WriteLine("Activation Task Init");
+            Log.Debug(this.GetType(), "Activation Task Init");
         }
 
         public override void Execute()
         {
-            MyLog.DEBUG.WriteLine("Activation Task Execute");
+            Log.Debug(this.GetType(), "Activation Task Execute");
         }
 
         // example usage: define

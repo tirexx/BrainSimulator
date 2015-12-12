@@ -15,6 +15,7 @@ using YAXLib;
 using ManagedCuda.VectorTypes;
 using GoodAI.Core.Execution;
 using System.Text;
+using GoodAI.Platform.Core.Logging;
 
 //namespace GoodAI.Modules.Vision
 namespace HTSLmodule.Worlds
@@ -257,17 +258,17 @@ namespace HTSLmodule.Worlds
                 }
                 catch (ArgumentOutOfRangeException e)
                 {
-                    MyLog.WARNING.WriteLine("Reload images Task: leaving defautl dataset, cause: " + e.Message);
+                    Log.Warn(this.GetType(), "Reload images Task: leaving defautl dataset, cause: " + e.Message);
                     
                 }
                 catch (IndexOutOfRangeException e)
                 {
-                    MyLog.WARNING.WriteLine("Reload images Task: leaving the default dataset, cause: " + e.Message);
+                    Log.Warn(this.GetType(), "Reload images Task: leaving the default dataset, cause: " + e.Message);
                     
                 }
                 catch (Exception)
                 {
-                    MyLog.WARNING.WriteLine("Reload images Task: leaving the default dataset, cause: could not read file(s)");    
+                    Log.Warn(this.GetType(), "Reload images Task: leaving the default dataset, cause: could not read file(s)");    
                 }
             }
         }

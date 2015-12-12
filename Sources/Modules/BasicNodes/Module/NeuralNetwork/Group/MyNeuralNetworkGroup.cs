@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.NeuralNetwork.Group
@@ -247,7 +248,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
                     // Get call stack
                     StackTrace stackTrace = new StackTrace();
 
-                    MyLog.ERROR.WriteLine("ERROR: GetError() called from " + stackTrace.GetFrame(1).GetMethod().Name + " needs a LossFunction task to be selected in the OutputLayer.");
+                    Log.Error(this.GetType(), "ERROR: GetError() called from " + stackTrace.GetFrame(1).GetMethod().Name + " needs a LossFunction task to be selected in the OutputLayer.");
                     return 0.0f;
                 }
 
@@ -265,7 +266,7 @@ namespace GoodAI.Modules.NeuralNetwork.Group
                 // Get call stack
                 StackTrace stackTrace = new StackTrace();
 
-                MyLog.ERROR.WriteLine("ERROR: GetError() called from " + stackTrace.GetFrame(1).GetMethod().Name + " needs an OutputLayer as the last layer.");
+                Log.Error(this.GetType(), "ERROR: GetError() called from " + stackTrace.GetFrame(1).GetMethod().Name + " needs an OutputLayer as the last layer.");
                 return 0.0f;
             }
         }

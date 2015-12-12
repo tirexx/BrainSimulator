@@ -1,5 +1,6 @@
 ﻿using GoodAI.Core.Nodes;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Utils
 {
@@ -12,7 +13,7 @@ namespace GoodAI.Core.Utils
 
             if (destinations.Count == 0 && nodes.Count > 0)
             {
-                MyLog.WARNING.WriteLine("Topological ordering failed in node group \"" + nodeGroup.Name + "\"! (no natural destination node of execution graph)");
+                Log.Warn(this.GetType(), "Topological ordering failed in node group \"" + nodeGroup.Name + "\"! (no natural destination node of execution graph)");
             }
            
             List<MyNode> orderedNodes = new List<MyNode>();
@@ -89,7 +90,7 @@ namespace GoodAI.Core.Utils
         {
             if (node.TopologicalOrder == -2 && !orderedNodes.Contains(node))
             {
-                MyLog.DEBUG.WriteLine("TopoOrdering: cycle detected");
+                Log.Debug(this.GetType(), "TopoOrdering: cycle detected");
             }
             //skip visited nodes
             if (node.TopologicalOrder != -1) return;

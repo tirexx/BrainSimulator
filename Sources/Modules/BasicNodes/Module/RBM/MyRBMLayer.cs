@@ -5,6 +5,7 @@ using GoodAI.Modules.NeuralNetwork.Layers;
 using GoodAI.Modules.RBM.Tasks;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.RBM
@@ -124,7 +125,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMForward(float SigmoidSteepness, bool useDropoutMask)
         {
-            MyLog.DEBUG.WriteLine("RBM forward to " + Name);
+            Log.Debug(this.GetType(), "RBM forward to " + Name);
             m_RBMForwardKernel.SetupExecution(Neurons);
             m_RBMForwardKernel.Run(
                                 Input,
@@ -143,7 +144,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMForwardAndStore(float SigmoidSteepness)
         {
-            MyLog.DEBUG.WriteLine("Forwarding and storing to " + Name);
+            Log.Debug(this.GetType(), "Forwarding and storing to " + Name);
             m_RBMForwardAndStoreKernel.SetupExecution(Neurons);
             m_RBMForwardAndStoreKernel.Run(
                                 Input,
@@ -162,7 +163,7 @@ namespace GoodAI.Modules.RBM
         internal void RBMSamplePositive()
         {
             
-            MyLog.DEBUG.WriteLine("Sampling positive weights of " + Name);
+            Log.Debug(this.GetType(), "Sampling positive weights of " + Name);
 
             m_RBMSamplePositiveKernel.SetupExecution(Weights.Count);
             m_RBMSamplePositiveKernel.Run(
@@ -176,7 +177,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMBackward(MyMemoryBlock<float> PreviousLayerBias, float SigmoidSteepness)
         {
-            MyLog.DEBUG.WriteLine("RBM backward from " + Name);
+            Log.Debug(this.GetType(), "RBM backward from " + Name);
 
             m_RBMBackwardKernel.SetupExecution(Input.Count);
             m_RBMBackwardKernel.Run(
@@ -192,7 +193,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMUpdateWeights(float LearningRate, float Momentum, float WeightDecay)
         {
-            MyLog.DEBUG.WriteLine("RBM updating weights of " + Name);
+            Log.Debug(this.GetType(), "RBM updating weights of " + Name);
 
             m_RBMUpdateWeightsKernel.SetupExecution(Weights.Count);
             m_RBMUpdateWeightsKernel.Run(
@@ -213,7 +214,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMCopyFilter(int FilterIndex)
         {
-            MyLog.DEBUG.WriteLine("RBM copying filter " + FilterIndex);
+            Log.Debug(this.GetType(), "RBM copying filter " + FilterIndex);
 
             m_RBMCopyFilterKernel.SetupExecution(Input.Count);
             m_RBMCopyFilterKernel.Run(
@@ -227,7 +228,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMUpdateBiases(float LearningRate, float Momentum, float WeightDecay)
         {
-            MyLog.DEBUG.WriteLine("RBM bias update of " + Name);
+            Log.Debug(this.GetType(), "RBM bias update of " + Name);
 
             m_RBMUpdateBiasesKernel.SetupExecution(Neurons);
             m_RBMUpdateBiasesKernel.Run(
@@ -250,7 +251,7 @@ namespace GoodAI.Modules.RBM
         /// </summary>
         internal void RBMRandomActivation()
         {
-            MyLog.DEBUG.WriteLine("RBM random activation of " + Name);
+            Log.Debug(this.GetType(), "RBM random activation of " + Name);
 
             RBMGenerateRandom();
 
@@ -286,7 +287,7 @@ namespace GoodAI.Modules.RBM
 
         public new void CreateDropoutMask()
         {
-            MyLog.DEBUG.WriteLine("RBM dropout mask creation of " + Name);
+            Log.Debug(this.GetType(), "RBM dropout mask creation of " + Name);
 
             MyKernelFactory.Instance.GetRandDevice(this).GenerateUniform32(DropoutMask.GetDevicePtr(GPU), Neurons);
 

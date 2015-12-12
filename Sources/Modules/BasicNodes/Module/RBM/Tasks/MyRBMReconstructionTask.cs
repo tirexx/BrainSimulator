@@ -3,6 +3,7 @@ using GoodAI.Modules.NeuralNetwork.Group;
 using GoodAI.Modules.NeuralNetwork.Layers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.RBM
@@ -178,7 +179,7 @@ namespace GoodAI.Modules.RBM
                 }
             }
 
-            MyLog.DEBUG.WriteLine("RBM reconstruction between layers [" + CurrentLayerIndex + ";" + (CurrentLayerIndex + 1) + "], step " + step + ".");
+            Log.Debug(this.GetType(), "RBM reconstruction between layers [" + CurrentLayerIndex + ";" + (CurrentLayerIndex + 1) + "], step " + step + ".");
             ++step;
         }
 

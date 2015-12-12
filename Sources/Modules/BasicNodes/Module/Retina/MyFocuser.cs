@@ -5,6 +5,7 @@ using GoodAI.Core.Utils;
 using GoodAI.Modules.Transforms;
 using System.ComponentModel;
 using System;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Retina
@@ -81,7 +82,7 @@ namespace GoodAI.Modules.Retina
                         Owner.PupilControl.ColumnHint, inputWidth, inputHeight, outputWidth, outputHeight, Owner.NumberPupilSamples, Owner.Output.Count);
                 }
                 else
-                    MyLog.ERROR.WriteLine("Owner.Input is null.");
+                    Log.Error(this.GetType(), "Owner.Input is null.");
             }
         }
         
@@ -115,7 +116,7 @@ namespace GoodAI.Modules.Retina
             {
                 if (Owner.NumberPupilSamples > 1)
                 {
-                    MyLog.WARNING.WriteLine("MyFocuser:MyRetinaTransform deoes not support multiple pupils input! (so far)");
+                    Log.Warn(this.GetType(), "MyFocuser:MyRetinaTransform deoes not support multiple pupils input! (so far)");
                 }
                 else
                 {

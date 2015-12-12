@@ -1,5 +1,6 @@
 ﻿using GoodAI.Core.Utils;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -101,7 +102,7 @@ namespace GoodAI.Modules.Harm
         {
             if (no >= this.m_maxDimensions - 1)
             {
-                MyLog.ERROR.WriteLine("Index of disabled dimension out of range!");
+                Log.Error(this.GetType(), "Index of disabled dimension out of range!");
                 return;
             }
             m_dimensionSizes[no] = 0;
@@ -111,7 +112,7 @@ namespace GoodAI.Modules.Harm
         {
             if (no >= m_dimensionSizes[ACTIONS])
             {
-                MyLog.ERROR.WriteLine("This action has not been used, ignoring");
+                Log.Error(this.GetType(), "This action has not been used, ignoring");
                 return;
             }
             if (!m_disabledActions.ContainsKey(no))
@@ -134,7 +135,7 @@ namespace GoodAI.Modules.Harm
         {
             if (m_disabledActions.ContainsKey(action))
             {
-                MyLog.ERROR.WriteLine("This action is disabled, will not set it!");
+                Log.Error(this.GetType(), "This action is disabled, will not set it!");
                 return;
             }
             this.UpdateDimensionSizes(stateValues, action);
@@ -176,7 +177,7 @@ namespace GoodAI.Modules.Harm
 
                     if (!d.GetChildNo(i).IsLast())
                     {
-                        MyLog.ERROR.WriteLine("Expexcted last dimension!");
+                        Log.Error(this.GetType(), "Expexcted last dimension!");
                         utils[i] = MyDimList.DEF_VAL;
                     }
                     if (!m_disabledActions.ContainsKey(i))
@@ -235,7 +236,7 @@ namespace GoodAI.Modules.Harm
         {
             if (stateIndexes.Length != m_maxDimensions - 1)
             {
-                MyLog.ERROR.WriteLine("incorrect no of dimensions! Asked for: "+
+                Log.Error(this.GetType(), "incorrect no of dimensions! Asked for: "+
                     stateIndexes.Length+" but dimensions are: " + (m_maxDimensions-1)+ " "+
                     m_dimensionSizes.Length);
                 return;

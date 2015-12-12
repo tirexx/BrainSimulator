@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Nodes
@@ -104,7 +105,7 @@ namespace GoodAI.Core.Nodes
             {
                 if (!MyConfiguration.KnownNodes.ContainsKey(node.GetType()))
                 {
-                    MyLog.WARNING.WriteLine("Unknown node type in loaded project: " + node.GetType());
+                    Log.Warn(this.GetType(), "Unknown node type in loaded project: " + node.GetType());
                     parentProject.ReadOnly = true;
 
                     try
@@ -122,7 +123,7 @@ namespace GoodAI.Core.Nodes
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Node type loading failed: " + e.Message);
+                        Log.Error(this.GetType(), "Node type loading failed: " + e.Message);
                     }
                 }
             };
@@ -138,7 +139,7 @@ namespace GoodAI.Core.Nodes
                 }
                 catch (Exception e)
                 {
-                    MyLog.ERROR.WriteLine("Error during connection deserialization: From id " + cp.From +" to id " + cp.To);
+                    Log.Error(this.GetType(), "Error during connection deserialization: From id " + cp.From +" to id " + cp.To);
                 }
             }            
 
@@ -204,7 +205,7 @@ namespace GoodAI.Core.Nodes
                     {
                         message += "Use " + obsolete.ReplacedBy.Name + " instead.";
                     }
-                    MyLog.WARNING.WriteLine(message);
+                    Log.Warn(this.GetType(), message);
                 }
             }
             return topId;
@@ -239,7 +240,7 @@ namespace GoodAI.Core.Nodes
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Saving state failed: " + e.Message);
+                Log.Error(this.GetType(), "Saving state failed: " + e.Message);
             }       
         }
 
@@ -263,7 +264,7 @@ namespace GoodAI.Core.Nodes
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Restoring state failed: " + e.Message);
+                Log.Error(this.GetType(), "Restoring state failed: " + e.Message);
                 return new MyNetworkState();                
             }
         }

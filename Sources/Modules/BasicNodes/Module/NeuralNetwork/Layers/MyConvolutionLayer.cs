@@ -4,6 +4,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.NeuralNetwork.Layers
@@ -62,7 +63,7 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                 {
                     if (PreviousConnectedLayers.Count <= 0)
                     {
-                        MyLog.ERROR.WriteLine("No connected layers to layer " + this.Name + ". Please update memory blocks.");
+                        Log.Error(this.GetType(), "No connected layers to layer " + this.Name + ". Please update memory blocks.");
                         return;
                     }
 
@@ -75,7 +76,7 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                             InputWidth = ((MyConvolutionLayer) prevLayer).OutputWidth;
                             InputHeight = ((MyConvolutionLayer) prevLayer).OutputHeight;
                             InputDepth = ((MyConvolutionLayer) prevLayer).FilterCount;
-                            MyLog.INFO.WriteLine("Input parameters of layer " + this.Name + " were set succesfully.");
+                            Log.Info(this.GetType(), "Input parameters of layer " + this.Name + " were set succesfully.");
                             return;
                         }
 
@@ -84,20 +85,20 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                             InputWidth = ((MyPoolingLayer) prevLayer).OutputWidth;
                             InputHeight = ((MyPoolingLayer) prevLayer).OutputHeight;
                             InputDepth = ((MyPoolingLayer) prevLayer).Depth;
-                            MyLog.INFO.WriteLine("Input parameters of layer " + this.Name + " were set succesfully.");
+                            Log.Info(this.GetType(), "Input parameters of layer " + this.Name + " were set succesfully.");
                             return;
                         }
 
                         // assume input image
                         if ((prevLayer is MyHiddenLayer) || (Input != null && Input.Count > 0))
                         {
-                            MyLog.INFO.WriteLine("Layer " + this.Name +
+                            Log.Info(this.GetType(), "Layer " + this.Name +
                                                  " cannot interpret input neuron count as image width, height and depth automatically.");
                             return;
                         }
                     }
 
-                    MyLog.WARNING.WriteLine("Input parameters for layer " + this.Name +
+                    Log.Warn(this.GetType(), "Input parameters for layer " + this.Name +
                                             " could not be set automatically.");
                 }
             }
@@ -165,10 +166,10 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                 {
                     int currentOutSize = 1 + (int)Math.Ceiling( (InputWidth - FilterWidth) / (double)HorizontalStride);
                     if (((InputWidth - currentOutSize) % 2) != 0)
-                        MyLog.WARNING.WriteLine("Zero padding of " + this.Name + " set automatically but filter will not cover the whole padded image when convolving.");
+                        Log.Warn(this.GetType(), "Zero padding of " + this.Name + " set automatically but filter will not cover the whole padded image when convolving.");
                     else
                     {
-                        MyLog.INFO.WriteLine("Output parameters of layer " + this.Name + " were set succesfully.");                        
+                        Log.Info(this.GetType(), "Output parameters of layer " + this.Name + " were set succesfully.");                        
                     }
                     ZeroPadding = (int)Math.Ceiling((InputWidth - currentOutSize) / (double)2);
 

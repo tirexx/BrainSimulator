@@ -190,7 +190,7 @@ namespace GoodAI.BrainSimulator.Forms
             if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
             {
                 MyMemoryManager.Instance.LoadBlocks(Target as MyNode, true, folderBrowserDialog.SelectedPath, false);
-                MyLog.INFO.WriteLine("Memory blocks of '" + (Target as MyNode).Name + "' were loaded from '" + folderBrowserDialog.SelectedPath + "'.");
+                Log.Info(this.GetType(), "Memory blocks of '" + (Target as MyNode).Name + "' were loaded from '" + folderBrowserDialog.SelectedPath + "'.");
             }       
             */
 

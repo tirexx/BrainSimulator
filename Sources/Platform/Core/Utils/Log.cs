@@ -22,9 +22,16 @@ namespace GoodAI.Core.Utils
 
     public class MyLog : TextWriter
     {
+        [Obsolete("Use Log.Debug instead.")]
         public static MyLog DEBUG { get; private set; }
+
+        [Obsolete("Use Log.Debug instead.")]
         public static MyLog INFO { get; private set; }
+
+        [Obsolete("Use Log.Debug instead.")]
         public static MyLog WARNING { get; private set; }
+
+        [Obsolete("Use Log.Debug instead.")]
         public static MyLog ERROR { get; private set; }
 
         public static MyLogLevel Level { get; set; }

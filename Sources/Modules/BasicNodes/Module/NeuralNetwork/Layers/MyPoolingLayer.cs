@@ -3,6 +3,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.NeuralNetwork.Layers
@@ -48,7 +49,7 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                 {
                     if (InputConnections.Length <= 0)
                     {
-                        MyLog.ERROR.WriteLine("No connected layers to layer " + this.Name + ". Please update memory blocks.");
+                        Log.Error(this.GetType(), "No connected layers to layer " + this.Name + ". Please update memory blocks.");
                         return;
                     }
                     if (Input.Owner is MyAbstractLayer)
@@ -60,7 +61,7 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                             InputWidth = ((MyConvolutionLayer)prevLayer).OutputWidth;
                             InputHeight = ((MyConvolutionLayer)prevLayer).OutputHeight;
                             Depth = ((MyConvolutionLayer)prevLayer).FilterCount;
-                            MyLog.INFO.WriteLine("Input parameters of layer " + this.Name + " were set succesfully.");
+                            Log.Info(this.GetType(), "Input parameters of layer " + this.Name + " were set succesfully.");
                             return;
                         }
 
@@ -69,20 +70,20 @@ namespace GoodAI.Modules.NeuralNetwork.Layers
                             InputWidth = ((MyPoolingLayer)prevLayer).OutputWidth;
                             InputHeight = ((MyPoolingLayer)prevLayer).OutputHeight;
                             Depth = ((MyPoolingLayer)prevLayer).Depth;
-                            MyLog.INFO.WriteLine("Input parameters of layer " + this.Name + " were set succesfully.");
+                            Log.Info(this.GetType(), "Input parameters of layer " + this.Name + " were set succesfully.");
                             return;
                         }
 
                         // assume input image
                         if ((prevLayer is MyHiddenLayer) || (Input != null && Input.Count > 0))
                         {
-                            MyLog.INFO.WriteLine("Layer " + this.Name +
+                            Log.Info(this.GetType(), "Layer " + this.Name +
                                                  " cannot interpret input neuron count as image width, height and depth automatically.");
                             return;
                         }
                     }
 
-                    MyLog.WARNING.WriteLine("Input parameters for layer " + this.Name +
+                    Log.Warn(this.GetType(), "Input parameters for layer " + this.Name +
                                             " could not be set automatically.");
                 }
             }

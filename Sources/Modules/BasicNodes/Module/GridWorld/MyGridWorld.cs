@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.GridWorld
@@ -339,7 +340,7 @@ namespace GoodAI.Modules.GridWorld
         {
             if (World.GetWidth() == 0 || World.GetHeight() == 0)
             {
-                MyLog.DEBUG.WriteLine("WARNING: unexpected size of the world: [" +
+                Log.Debug(this.GetType(), "WARNING: unexpected size of the world: [" +
                     World.GetWidth() + "," + World.GetHeight() + "]");
             }
             MapSizeOutput.SafeCopyToHost();

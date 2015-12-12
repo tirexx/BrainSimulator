@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GoodAI.Platform.Core.Logging;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace GoodAI.BrainSimulator.Forms
@@ -51,7 +52,7 @@ namespace GoodAI.BrainSimulator.Forms
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Exeption occured while updating node " + Target.Name +": " + e.Message);
+                        Log.Error(this.GetType(), "Exeption occured while updating node " + Target.Name +": " + e.Message);
                     }
                 }
 

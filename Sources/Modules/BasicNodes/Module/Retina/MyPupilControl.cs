@@ -389,7 +389,7 @@ namespace GoodAI.Modules.Retina
 
                         numOfSplits++;
                     }
-                    //MyLog.DEBUG.WriteLine("Split candidates: " + i + ". = (" + c_src_dbi + " -> " + c_n12_dbi + ")");
+                    //Log.Debug(this.GetType(), "Split candidates: " + i + ". = (" + c_src_dbi + " -> " + c_n12_dbi + ")");
                 }
 
                 Owner.m_centroidsCount += numOfSplits;

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Configuration
@@ -94,7 +95,7 @@ namespace GoodAI.Core.Configuration
                     }
                     catch (Exception e)
                     {
-                        MyLog.ERROR.WriteLine("Node type loading failed: " + e.Message);
+                        Log.Error(this.GetType(), "Node type loading failed: " + e.Message);
                     }
                 }
             }
@@ -121,7 +122,7 @@ namespace GoodAI.Core.Configuration
 
             if (Conversion == null)
             {
-                MyLog.WARNING.WriteLine("Can't load version (looking for type {0}).", typeName);
+                Log.Warn(this.GetType(), "Can't load version (looking for type {0}).", typeName);
             }
         }
 

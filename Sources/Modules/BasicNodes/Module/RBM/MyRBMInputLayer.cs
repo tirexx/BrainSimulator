@@ -7,6 +7,7 @@ using GoodAI.Modules.NeuralNetwork.Layers;
 using GoodAI.Modules.RBM.Tasks;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.RBM
@@ -103,13 +104,13 @@ namespace GoodAI.Modules.RBM
             // only copy to output
             if (partOfFeedForward && !ApplyBiases)
             {
-                MyLog.DEBUG.WriteLine("RBM forward input without biases to " + Name);
+                Log.Debug(this.GetType(), "RBM forward input without biases to " + Name);
                 Input.CopyToMemoryBlock(Output, 0, 0, Neurons);
             }
             // apply biases
             else
             {
-                MyLog.DEBUG.WriteLine("RBM forward input and apply biases to " + Name);
+                Log.Debug(this.GetType(), "RBM forward input and apply biases to " + Name);
                 // first calculate this layer's delta...
                 m_RBMInputForwardKernel.SetupExecution(Neurons);
                 m_RBMInputForwardKernel.Run(
@@ -125,7 +126,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMInputForwardAndStore()
         {
-            MyLog.DEBUG.WriteLine("RBM forward input and store to " + Name);
+            Log.Debug(this.GetType(), "RBM forward input and store to " + Name);
 
             // first calculate this layer's delta...
             m_RBMInputForwardAndStoreKernel.SetupExecution(Neurons);
@@ -142,7 +143,7 @@ namespace GoodAI.Modules.RBM
 
         internal void RBMUpdateBiases(float LearningRate, float Momentum, float WeightDecay)
         {
-            MyLog.DEBUG.WriteLine("RBM bias update of " + Name);
+            Log.Debug(this.GetType(), "RBM bias update of " + Name);
 
             m_RBMUpdateBiasesKernel.SetupExecution(Neurons);
             m_RBMUpdateBiasesKernel.Run(
@@ -165,7 +166,7 @@ namespace GoodAI.Modules.RBM
         /// </summary>
         internal void RBMRandomActivation()
         {
-            MyLog.DEBUG.WriteLine("RBM random activation of " + Name);
+            Log.Debug(this.GetType(), "RBM random activation of " + Name);
 
             RBMGenerateRandom();
 

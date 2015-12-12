@@ -101,7 +101,7 @@ namespace GoodAI.Modules.Testing
                 {
                     float x1 = Owner.ClustersPos.Host[i * Owner.ClustersPos.ColumnHint];
                     float y1 = Owner.ClustersPos.Host[i * Owner.ClustersPos.ColumnHint + 1];
-                    //MyLog.DEBUG.WriteLine(x + " - " + y);
+                    //Log.Debug(this.GetType(), x + " - " + y);
 
                     var space1 = SpatialEncode(x1, y1);
                     var shape1 = Owner.Input.GetDevicePtr(Owner.GPU, i * Owner.ClusterSize);

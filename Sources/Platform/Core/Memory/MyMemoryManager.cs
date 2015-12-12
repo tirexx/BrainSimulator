@@ -4,6 +4,7 @@ using ManagedCuda;
 using ManagedCuda.BasicTypes;
 using System;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Memory
 {
@@ -163,7 +164,7 @@ namespace GoodAI.Core.Memory
             {
                 if (memoryBlock.Owner.GPU < 0)
                 {
-                    MyLog.WARNING.WriteLine("No GPU assigned for node " + memoryBlock.Owner.Name + ". Using default GPU (" + (MyKernelFactory.Instance.DevCount - 1) + ").");
+                    Log.Warn(this.GetType(), "No GPU assigned for node " + memoryBlock.Owner.Name + ". Using default GPU (" + (MyKernelFactory.Instance.DevCount - 1) + ").");
                     memoryBlock.Owner.GPU = MyKernelFactory.Instance.DevCount - 1;
                 }
 

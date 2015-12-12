@@ -2,6 +2,7 @@
 using GoodAI.Core.Task;
 using GoodAI.Core.Utils;
 using System;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Execution
 {   
@@ -75,7 +76,7 @@ namespace GoodAI.Core.Execution
                 {
                     if (currentChild.Enabled)
                     {
-                        MyLog.DEBUG.WriteLine("Executing: " + currentChild.Name);
+                        Log.Debug(this.GetType(), "Executing: " + currentChild.Name);
                         currentChild.SimulationStep = SimulationStep;
                         currentChild.Execute();
                     }

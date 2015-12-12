@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Utils
@@ -49,7 +50,7 @@ namespace GoodAI.Core.Utils
                 }
                 catch
                 {
-                    MyLog.WARNING.WriteLine("Task deserialization failed for: " + child);
+                    Log.Warn(this.GetType(), "Task deserialization failed for: " + child);
                 }                
             }
             return result;

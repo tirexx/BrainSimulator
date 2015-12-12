@@ -386,7 +386,7 @@ namespace GoodAI.Modules.GridWorld
                 // assumed that each thing has only one property
                 foreach (KeyValuePair<String, float> item in so[i].properties)
                 {
-                    //MyLog.DEBUG.WriteLine("object type is: " + so[i].GetType().Name);
+                    //Log.Debug(this.GetType(), "object type is: " + so[i].GetType().Name);
                     if (so[i] is MyDoor)
                     {
                         names.Add("D" + door);

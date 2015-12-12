@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.MastermindWorld
@@ -435,7 +436,7 @@ namespace GoodAI.Modules.MastermindWorld
                 }
                 catch (Exception ex)
                 {
-                    MyLog.WARNING.WriteLine(ex.Message);
+                    Log.Warn(this.GetType(), ex.Message);
                 }
             }
         }
@@ -449,7 +450,7 @@ namespace GoodAI.Modules.MastermindWorld
         {
             if (!m_bitmapTable.ContainsKey(textureType))
             {
-                MyLog.WARNING.WriteLine("No bitmap was loaded for texture {0}", textureType.ToString());
+                Log.Warn(this.GetType(), "No bitmap was loaded for texture {0}", textureType.ToString());
                 return 0;
             }
             else return m_bitmapTable[textureType].Width * m_bitmapTable[textureType].Height * SOURCE_VALUES_PER_PIXEL;

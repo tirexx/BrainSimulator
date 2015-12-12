@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoodAI.Core.Nodes;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.NeuralNetwork.Tasks
 {
@@ -256,10 +257,10 @@ namespace GoodAI.Modules.NeuralNetwork.Tasks
             if (task is MyAbstractBackpropTask)
                 backpropTask = task as MyAbstractBackpropTask;
             else
-                MyLog.ERROR.WriteLine("Backprop task does not derive from MyAbstractBackpropTask in " + Owner.ParentNetwork);
+                Log.Error(this.GetType(), "Backprop task does not derive from MyAbstractBackpropTask in " + Owner.ParentNetwork);
 
             if (backpropTask == null)
-                MyLog.ERROR.WriteLine("Undetermined backprop task in " + Owner.ParentNetwork);
+                Log.Error(this.GetType(), "Undetermined backprop task in " + Owner.ParentNetwork);
             else
             {
                 backpropTask.Execute(Owner); // call the group task to do the backpropagation

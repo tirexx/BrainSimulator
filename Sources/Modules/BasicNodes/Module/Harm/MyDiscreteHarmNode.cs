@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 
@@ -90,17 +91,17 @@ namespace GoodAI.Modules.Harm
             {   
                 if (NoActions == 6)
                 {
-                    MyLog.DEBUG.WriteLine("6 actions set by the user, will use action names for gridworld");
+                    Log.Debug(this.GetType(), "6 actions set by the user, will use action names for gridworld");
                     Rds = new MyRootDecisionSpace(GlobalDataInput.Count, new String[] { " -", " <", " >", " ^", " v", " P" }, LearningParams);
                 }
                 else if (NoActions == 3)
                 {
-                    MyLog.DEBUG.WriteLine("3 actions set by the user, will use action names for pong");
+                    Log.Debug(this.GetType(), "3 actions set by the user, will use action names for pong");
                     Rds = new MyRootDecisionSpace(GlobalDataInput.Count, new String[] { " <", " -", " >" }, LearningParams);
                 }
                 else
                 {
-                    MyLog.DEBUG.WriteLine("Unknown no. of actions, will use automatic naming of actions");
+                    Log.Debug(this.GetType(), "Unknown no. of actions, will use automatic naming of actions");
                     String[] names = new String[NoActions];
                     for (int i = 0; i < NoActions; i++)
                     {
@@ -172,7 +173,7 @@ namespace GoodAI.Modules.Harm
                 }
                 else
                 {
-                    MyLog.DEBUG.WriteLine("MyGridWorld world expected, will not parse variable names.");
+                    Log.Debug(this.GetType(), "MyGridWorld world expected, will not parse variable names.");
                 }
             }
 
@@ -200,7 +201,7 @@ namespace GoodAI.Modules.Harm
                     {
                         if (!warnedNegative)
                         {
-                            MyLog.DEBUG.WriteLine("WARNING: negative value on input detected, all negative values will be set to 0");
+                            Log.Debug(this.GetType(), "WARNING: negative value on input detected, all negative values will be set to 0");
                             warnedNegative = true;
                         }
                         inputs[i] = 0;
@@ -226,7 +227,7 @@ namespace GoodAI.Modules.Harm
             {
                 if (Owner.SelectedActionInput.Count != Owner.Hierarchy.GetNoPrimitiveActions())
                 {
-                    MyLog.ERROR.WriteLine("Unexpected no. of primitive actions on the SelectedAction input, ignoring!");
+                    Log.Error(this.GetType(), "Unexpected no. of primitive actions on the SelectedAction input, ignoring!");
                     return;
                 }
 
@@ -468,7 +469,7 @@ namespace GoodAI.Modules.Harm
 
                 if (outputs.Length != Owner.UtilityOutput.Count)
                 {
-                    MyLog.ERROR.WriteLine("List of inferred utilites is different than no. of primitive actions!");
+                    Log.Error(this.GetType(), "List of inferred utilites is different than no. of primitive actions!");
                 }
                 else
                 {
@@ -565,7 +566,7 @@ namespace GoodAI.Modules.Harm
                     if (!warned.ContainsKey(ind))
                     {
                         warned.Add(ind, true);
-                        MyLog.DEBUG.WriteLine("Observer: Abstract action index (" + ind + ") of predictor out of bounds");
+                        Log.Debug(this.GetType(), "Observer: Abstract action index (" + ind + ") of predictor out of bounds");
                     }
                     return null;
                 }
@@ -574,7 +575,7 @@ namespace GoodAI.Modules.Harm
                 {
                     if (!warned.ContainsKey(ind))
                     {
-                        MyLog.DEBUG.WriteLine("Observer: No SRP of this index (" + ind + ") created so far");
+                        Log.Debug(this.GetType(), "Observer: No SRP of this index (" + ind + ") created so far");
                         warned.Add(ind, true);
                     }
                     return null;
@@ -589,7 +590,7 @@ namespace GoodAI.Modules.Harm
                 }
                 else
                 {
-                    MyLog.ERROR.WriteLine("Observer: Non-SRP action found where it should be!");
+                    Log.Error(this.GetType(), "Observer: Non-SRP action found where it should be!");
                     return null;
                 }
             }
@@ -603,7 +604,7 @@ namespace GoodAI.Modules.Harm
             {
                 if (ind < 0 || ind >= Owner.Rds.VarManager.GetMaxVariables())
                 {
-                    MyLog.DEBUG.WriteLine("Observer: Index of variable out of bounds");
+                    Log.Debug(this.GetType(), "Observer: Index of variable out of bounds");
                     return null;
                 }
                 return Owner.Rds.VarManager.GetVarNo(ind).MyAction;
@@ -714,12 +715,12 @@ namespace GoodAI.Modules.Harm
 
                         if (utilities.Length != actionGlobalIndexes.Length)
                         {
-                            MyLog.DEBUG.WriteLine("ERROR: unexpected length of utilities array, will place default values");
+                            Log.Debug(this.GetType(), "ERROR: unexpected length of utilities array, will place default values");
                             utilities = new float[actionGlobalIndexes.Length];
                         }
                         else if (actionGlobalIndexes.Length == 0)
                         {
-                            MyLog.DEBUG.WriteLine("WARNING: this DS contains no actions. Will use the action 0");
+                            Log.Debug(this.GetType(), "WARNING: this DS contains no actions. Will use the action 0");
                             utilities = new float[1];
                             actionGlobalIndexes = new int[] { 0 };
                         }
@@ -760,7 +761,7 @@ namespace GoodAI.Modules.Harm
                 if (!variableWarned.ContainsKey(predictorName + v.GetLabel()))
                 {
                     variableWarned.Add(predictorName + v.GetLabel(), v);
-                    MyLog.DEBUG.WriteLine("Observer Warning: variable " + v.GetLabel() + " not contained in the DS: " + predictorName);
+                    Log.Debug(this.GetType(), "Observer Warning: variable " + v.GetLabel() + " not contained in the DS: " + predictorName);
                 }
                 return 1;
             }

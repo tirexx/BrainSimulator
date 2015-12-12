@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using GoodAI.Core.Nodes;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Execution
 {
@@ -162,21 +163,21 @@ namespace GoodAI.Core.Execution
         {
             if (State == SimulationState.STOPPED)
             {
-                MyLog.INFO.WriteLine("Scheduling...");                
+                Log.Info(this.GetType(), "Scheduling...");                
                 Simulation.Schedule(Project);
 
-                MyLog.INFO.WriteLine("Initializing tasks...");
+                Log.Info(this.GetType(), "Initializing tasks...");
                 Simulation.Init();          
 
-                MyLog.INFO.WriteLine("Allocating memory...");
+                Log.Info(this.GetType(), "Allocating memory...");
                 Simulation.AllocateMemory();
                 PrintMemoryInfo();             
 
-                MyLog.INFO.WriteLine("Starting simulation...");
+                Log.Info(this.GetType(), "Starting simulation...");
             }
             else
             {
-                MyLog.INFO.WriteLine("Resuming simulation...");
+                Log.Info(this.GetType(), "Resuming simulation...");
             }
 
             State = oneStepOnly ? SimulationState.RUNNING_STEP : SimulationState.RUNNING;
@@ -243,7 +244,7 @@ namespace GoodAI.Core.Execution
                 catch (Exception ex)
                 {
                     m_simulationStoppedException = ex;
-                    MyLog.ERROR.WriteLine("Error occured during simulation: " + ex.Message);
+                    Log.Error(this.GetType(), "Error occured during simulation: " + ex.Message);
                     e.Cancel = true;
                 }
             }
@@ -262,7 +263,7 @@ namespace GoodAI.Core.Execution
                     }
                     catch (Exception ex)
                     {
-                        MyLog.ERROR.WriteLine("Error occured during simulation: " + ex.Message);
+                        Log.Error(this.GetType(), "Error occured during simulation: " + ex.Message);
                         m_simulationStoppedException = ex;
                         break;
                     }                 
@@ -313,7 +314,7 @@ namespace GoodAI.Core.Execution
             else
             {
                 // This means we're either pausing, or this was a single simulation step.
-                MyLog.INFO.WriteLine("Paused.");
+                Log.Info(this.GetType(), "Paused.");
                 State = SimulationState.PAUSED;
             }
         }
@@ -326,7 +327,7 @@ namespace GoodAI.Core.Execution
         /// <returns>true if the model did not converge (error), false if it did.</returns>
         public bool UpdateMemoryModel()
         {            
-            MyLog.INFO.WriteLine("Updating memory blocks...");
+            Log.Info(this.GetType(), "Updating memory blocks...");
 
             IMyOrderingAlgorithm topoOps = new MyHierarchicalOrdering();
             List<MyNode> orderedNodes = topoOps.EvaluateOrder(Project.Network);
@@ -352,14 +353,14 @@ namespace GoodAI.Core.Execution
 
                     if (!anyOutputChanged)
                     {
-                        MyLog.INFO.WriteLine("Successful update after " + attempts + " cycle(s).");
+                        Log.Info(this.GetType(), "Successful update after " + attempts + " cycle(s).");
                         break;
                     }
                 }
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Exception occured while updating memory model: " + e.Message);
+                Log.Error(this.GetType(), "Exception occured while updating memory model: " + e.Message);
                 return true;
             }
 
@@ -385,10 +386,10 @@ namespace GoodAI.Core.Execution
             if (State != SimulationState.STOPPED)
             {
                 stopping = true;
-                MyLog.INFO.WriteLine("Cleaning up world...");
+                Log.Info(this.GetType(), "Cleaning up world...");
                 Project.World.Cleanup();
 
-                MyLog.INFO.WriteLine("Freeing memory...");
+                Log.Info(this.GetType(), "Freeing memory...");
                 Simulation.FreeMemory();
                 PrintMemoryInfo();
 
@@ -403,10 +404,10 @@ namespace GoodAI.Core.Execution
 
             if (stopping)
             {
-                MyLog.INFO.WriteLine("Clearing simulation...");
+                Log.Info(this.GetType(), "Clearing simulation...");
                 // This will destroy the collection that holds the nodes, so it has to be the last thing.
                 Simulation.Clear();
-                MyLog.INFO.WriteLine("Stopped after "+this.SimulationStep+" steps.");
+                Log.Info(this.GetType(), "Stopped after "+this.SimulationStep+" steps.");
 
                 if (SimulationStopped != null)
                 {
@@ -432,7 +433,7 @@ namespace GoodAI.Core.Execution
             {
                 Tuple<SizeT, SizeT> memInfo = memInfos[i];
                 SizeT used = memInfo.Item2 - memInfo.Item1;
-                MyLog.INFO.WriteLine("GPU " + i + ": " + (used / 1024 / 1024) + " MB used,  " + (memInfo.Item1 / 1024 / 1024) + " MB free");
+                Log.Info(this.GetType(), "GPU " + i + ": " + (used / 1024 / 1024) + " MB used,  " + (memInfo.Item1 / 1024 / 1024) + " MB free");
             }
         }
 

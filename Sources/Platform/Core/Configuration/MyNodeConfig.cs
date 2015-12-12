@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Configuration
@@ -132,7 +133,7 @@ namespace GoodAI.Core.Configuration
                     }
                     else
                     {
-                        MyLog.ERROR.WriteLine("Observer type not found: " + oc.ObserverTypeName);
+                        Log.Error(this.GetType(), "Observer type not found: " + oc.ObserverTypeName);
                     }                    
                 }
             }

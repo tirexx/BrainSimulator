@@ -5,6 +5,7 @@ using GoodAI.Core.Utils;
 using ManagedCuda;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.VSA
@@ -229,7 +230,7 @@ namespace GoodAI.Modules.VSA
 
                     if (Owner.Input.Host[0] < 0)
                     {
-                        MyLog.WARNING.WriteLine("MySymbolicGrid: incorrect X position: " + Owner.Input.Host[0]);
+                        Log.Warn(this.GetType(), "MySymbolicGrid: incorrect X position: " + Owner.Input.Host[0]);
                         Owner.NormalizedInput.Host[0] = 0;
                     }
                     else
@@ -239,7 +240,7 @@ namespace GoodAI.Modules.VSA
 
                     if (Owner.Input.Host[1] < 0)
                     {
-                        MyLog.WARNING.WriteLine("MySymbolicGrid: incorrect Y position: " + Owner.Input.Host[1]);
+                        Log.Warn(this.GetType(), "MySymbolicGrid: incorrect Y position: " + Owner.Input.Host[1]);
                         Owner.NormalizedInput.Host[1] = 0;
                     }
                     else
@@ -468,7 +469,7 @@ namespace GoodAI.Modules.VSA
 
             private void HandleIncorrectPosition()
             {
-                MyLog.WARNING.WriteLine("Incorrect position detected");
+                Log.Warn(this.GetType(), "Incorrect position detected");
                 Owner.Output.Fill(0);
             }
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Configuration
@@ -71,17 +72,17 @@ namespace GoodAI.Core.Configuration
             }
             catch (OptionException e)
             {
-                MyLog.ERROR.WriteLine(e.Message);
+                Log.Error(typeof(MyConfiguration), e.Message);
             }
         }
 
         public static void LoadModules()
         {
-            MyLog.INFO.WriteLine("Loading system modules...");
+            Log.Info(typeof(MyConfiguration), "Loading system modules...");
 
             AddModuleFromAssembly(new FileInfo(MyResources.GetEntryAssemblyPath() + "\\" + CORE_MODULE_NAME), true);                     
 
-            MyLog.INFO.WriteLine("Loading custom modules...");
+            Log.Info(typeof(MyConfiguration), "Loading custom modules...");
 
             foreach (string modulePath in ModulesSearchPath)
             {
@@ -98,7 +99,7 @@ namespace GoodAI.Core.Configuration
                 }
                 else
                 {
-                    MyLog.ERROR.WriteLine("Module assembly not found: " + info);
+                    Log.Error(typeof(MyConfiguration), "Module assembly not found: " + info);
                 }
             }
         }
@@ -138,12 +139,12 @@ namespace GoodAI.Core.Configuration
                     }
                 }
 
-                MyLog.INFO.WriteLine("Module loaded: " + file.Name 
+                Log.Info(typeof(MyConfiguration), "Module loaded: " + file.Name 
                     + (moduleConfig.Conversion != null ? " (version=" + moduleConfig.GetXmlVersion() + ")" : " (no versioning)"));                
             }
             catch (Exception e)
             {
-                MyLog.ERROR.WriteLine("Module loading failed: " + e.Message);
+                Log.Error(typeof(MyConfiguration), "Module loading failed: " + e.Message);
 
                 if (basicNode)
                 {

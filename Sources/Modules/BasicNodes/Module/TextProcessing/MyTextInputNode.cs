@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.LTM
@@ -128,7 +129,7 @@ namespace GoodAI.Modules.LTM
                 if (ConvertToUpperCase)
                 {
                     padded = padded.ToUpper();
-                    MyLog.DEBUG.WriteLine("text: " + padded);
+                    Log.Debug(this.GetType(), "text: " + padded);
                 }
 
                 

@@ -1,5 +1,6 @@
 ﻿using GoodAI.Core.Memory;
 using GoodAI.Core.Utils;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Observers
 {
@@ -26,7 +27,7 @@ namespace GoodAI.Core.Observers
             }
             else
             {
-                MyLog.WARNING.WriteLine("Invalid data value");
+                Log.Warn(this.GetType(), "Invalid data value");
             }
         }
     }

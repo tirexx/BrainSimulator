@@ -4,6 +4,7 @@ using GoodAI.Core.Utils;
 using GoodAI.Modules.Matrix;
 using System;
 using System.Diagnostics;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.BasicNodes.Transforms
 {
@@ -131,13 +132,13 @@ namespace GoodAI.BasicNodes.Transforms
 
             if ((operation & m_operations) == 0)
             {
-                MyLog.WARNING.WriteLine("Trying to execute an uninitialized vector operation. Owner: " + m_caller.Name);
+                Log.Warn(this.GetType(), "Trying to execute an uninitialized vector operation. Owner: " + m_caller.Name);
                 return false;
             }
 
             if (operation != VectorOperation.Rotate && sizeA != sizeB)
             {
-                MyLog.ERROR.WriteLine("Vectors have to be the same length for this operation. Owner: " + m_caller.Name);
+                Log.Error(this.GetType(), "Vectors have to be the same length for this operation. Owner: " + m_caller.Name);
                 return false;
             }
 

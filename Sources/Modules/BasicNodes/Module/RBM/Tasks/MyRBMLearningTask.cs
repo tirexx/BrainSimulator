@@ -3,6 +3,7 @@ using GoodAI.Modules.NeuralNetwork.Group;
 using GoodAI.Modules.NeuralNetwork.Layers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.RBM
@@ -306,11 +307,11 @@ namespace GoodAI.Modules.RBM
             }
             else
             {
-                MyLog.ERROR.WriteLine("Wrong index parameter. There are " + layers.Count + " total layers, can't sample from " + CurrentLayerIndex);
+                Log.Error(this.GetType(), "Wrong index parameter. There are " + layers.Count + " total layers, can't sample from " + CurrentLayerIndex);
             }
 
 
-            MyLog.DEBUG.WriteLine("RBM initialization between layers [" + CurrentLayerIndex + ";" + (CurrentLayerIndex + 1) + "], step " + step + ".");
+            Log.Debug(this.GetType(), "RBM initialization between layers [" + CurrentLayerIndex + ";" + (CurrentLayerIndex + 1) + "], step " + step + ".");
             ++step;
         }
 

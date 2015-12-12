@@ -2,6 +2,7 @@
 using GoodAI.Core.Task;
 using GoodAI.Core.Utils;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.RBM.Tasks
@@ -32,7 +33,7 @@ namespace GoodAI.Modules.RBM.Tasks
         //Task execution
         public override void Execute()
         {
-            MyLog.DEBUG.WriteLine("Initialising random weights for " + Owner + " with stdDev: " + StandardDeviation);
+            Log.Debug(this.GetType(), "Initialising random weights for " + Owner + " with stdDev: " + StandardDeviation);
             MyKernelFactory.Instance.GetRandDevice(Owner).SetPseudoRandomGeneratorSeed(RandomSeed); // set random seed
             MyKernelFactory.Instance.GetRandDevice(Owner).GenerateNormal(Owner.Weights.GetDevice(Owner), 0, StandardDeviation);
         }

@@ -4,6 +4,7 @@ using GoodAI.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Core.Signals
 {
@@ -31,7 +32,7 @@ namespace GoodAI.Core.Signals
             }
             else
             {
-                MyLog.WARNING.WriteLine("Unknown signal: " + defaultName);
+                Log.Warn(typeof(MySignal), "Unknown signal: " + defaultName);
                 return null;
             }
         }

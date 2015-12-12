@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using GoodAI.Platform.Core.Logging;
 using WeifenLuo.WinFormsUI.Docking;
 using YAXLib;
 
@@ -73,7 +74,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception ex)
             {
-                MyLog.ERROR.WriteLine("Error setting up startup project: " + ex.Message);
+                Log.Error(this.GetType(), "Error setting up startup project: " + ex.Message);
                 return false;
             }
 
@@ -167,7 +168,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception ex)
             {
-                MyLog.ERROR.WriteLine("Error while opening a project:" + ex.Message);
+                Log.Error(this.GetType(), "Error while opening a project:" + ex.Message);
             }
         }
 
@@ -374,7 +375,7 @@ namespace GoodAI.BrainSimulator.Forms
         private void reloadButton_Click(object sender, EventArgs e)
         {
             MyKernelFactory.Instance.ClearLoadedKernels();
-            MyLog.INFO.WriteLine("Kernel cache cleared.");
+            Log.Info(this.GetType(), "Kernel cache cleared.");
         }
 
         private void loadUserNodesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -501,11 +502,11 @@ namespace GoodAI.BrainSimulator.Forms
                         YAXExceptionTypes.Warning);
 
                     serializer.SerializeToFile(networkState, saveMemFileDialog.FileName);
-                    MyLog.INFO.WriteLine("Saving state: " + saveMemFileDialog.FileName);
+                    Log.Info(this.GetType(), "Saving state: " + saveMemFileDialog.FileName);
                 }
                 catch (Exception ex)
                 {
-                    MyLog.ERROR.WriteLine("Saving state failed: " + ex.Message);
+                    Log.Error(this.GetType(), "Saving state failed: " + ex.Message);
                 }    
             }
         }
@@ -540,7 +541,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
             catch (Exception exc)
             {
-                MyLog.ERROR.WriteLine("Failed to get HelpUrl setting: " + exc.Message);
+                Log.Error(this.GetType(), "Failed to get HelpUrl setting: " + exc.Message);
             }
         }
 

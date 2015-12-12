@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.LTM
 {
@@ -40,7 +41,7 @@ namespace GoodAI.Modules.LTM
 
             if (code < 0 || code + ' ' > '~')
             {
-                GoodAI.Core.Utils.MyLog.WARNING.WriteLine("Unrecognized code '" + code + "' for conversion to character.");
+                Log.Warn(typeof(MyStringConversionsClass), "Unrecognized code '" + code + "' for conversion to character.");
                 return ' ';
             }
 

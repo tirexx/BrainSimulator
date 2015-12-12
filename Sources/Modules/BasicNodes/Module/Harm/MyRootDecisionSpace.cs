@@ -1,6 +1,7 @@
 ﻿using GoodAI.Core.Utils;
 using System;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -34,7 +35,7 @@ namespace GoodAI.Modules.Harm
         {
             if (level < 0)
             {
-                MyLog.ERROR.WriteLine("Cannot set level under the 0");
+                Log.Error(this.GetType(), "Cannot set level under the 0");
                 return;
             }
             this.m_level = level;
@@ -236,7 +237,7 @@ namespace GoodAI.Modules.Harm
         {
             if (action < 0 || action >= this.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Index out of range");
+                Log.Error(this.GetType(), "Index out of range");
                 return;
             }
             this.AcitonHistory.RegisterExecutedAction(action);
@@ -257,7 +258,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index < 0 || index >= Actions.Count)
             {
-                MyLog.ERROR.WriteLine("Index ouf of range");
+                Log.Error(this.GetType(), "Index ouf of range");
                 return "";
             }
             return Actions[index].GetLabel();
@@ -422,7 +423,7 @@ namespace GoodAI.Modules.Harm
         {
             if (inputData.Length > this.MAX_VARIABLES)
             {
-                MyLog.ERROR.WriteLine("input data have too many dimensions " + inputData.Length
+                Log.Error(this.GetType(), "input data have too many dimensions " + inputData.Length
                     + ", increase maxVariables (current=" + this.MAX_VARIABLES + ")");
                 return;
             }
@@ -437,7 +438,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= this.MAX_VARIABLES)
             {
-                MyLog.ERROR.WriteLine("Index of requested variable out of range!");
+                Log.Error(this.GetType(), "Index of requested variable out of range!");
                 return null;
             }
             return m_vars[index];

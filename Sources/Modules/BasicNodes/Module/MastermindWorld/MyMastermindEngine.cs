@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using GoodAI.Core.Utils;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.MastermindWorld
 {
@@ -173,7 +174,7 @@ namespace GoodAI.Modules.MastermindWorld
                     int key = (int)Math.Round(guess[i]);
                     if(key >= m_params.NumberOfColors || key < 0)
                     {
-                        MyLog.WARNING.WriteLine("Mastermind world: the submitted guess contains an out-of-range color: {0}, range: <{1}-{2}>", 
+                        Log.Warn(this.GetType(), "Mastermind world: the submitted guess contains an out-of-range color: {0}, range: <{1}-{2}>", 
                             guess[i], 0, m_params.NumberOfColors-1);
                     }
                     if(colorHistoHidden.ContainsKey(key))

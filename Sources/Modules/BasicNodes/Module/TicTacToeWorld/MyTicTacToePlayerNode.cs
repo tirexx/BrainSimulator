@@ -4,6 +4,7 @@ using GoodAI.Core.Task;
 using GoodAI.Core.Utils;
 using System;
 using System.ComponentModel;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.TicTacToe
@@ -98,7 +99,7 @@ namespace GoodAI.Modules.TicTacToe
                     (int)StateInput.Host[i] != (int)MyTicTacToeWorld.TALES.PLAYER_O &&
                     (int)StateInput.Host[i] != (int)MyTicTacToeWorld.TALES.PLAYER_X)
                 {
-                    MyLog.DEBUG.WriteLine("Unexpected state value, expected only these: " +
+                    Log.Debug(this.GetType(), "Unexpected state value, expected only these: " +
                         (int)MyTicTacToeWorld.TALES.EMPTY + ", " +
                         (int)MyTicTacToeWorld.PLAYERS.PLAYER_X + ", " +
                         (int)MyTicTacToeWorld.PLAYERS.PLAYER_O);

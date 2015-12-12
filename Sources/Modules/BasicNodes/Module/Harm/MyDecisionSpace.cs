@@ -1,5 +1,6 @@
 ﻿using GoodAI.Core.Utils;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -80,7 +81,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= m_rds.ActionManager.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Action index out of range of max actions!");
+                Log.Error(this.GetType(), "Action index out of range of max actions!");
                 return false;
             }
             this.Resize(index);
@@ -91,7 +92,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= m_rds.ActionManager.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Action index out of range of max actions!");
+                Log.Error(this.GetType(), "Action index out of range of max actions!");
                 return 0;
             }
             this.Resize(index);
@@ -102,7 +103,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= m_rds.ActionManager.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Action index (" + index +
+                Log.Error(this.GetType(), "Action index (" + index +
                     ") out of range of max actions! (" + m_rds.ActionManager.GetNoActions() + ")");
                 return;
             }
@@ -115,7 +116,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= m_rds.ActionManager.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Action index out of range of max actions!");
+                Log.Error(this.GetType(), "Action index out of range of max actions!");
                 return;
             }
             this.Resize(index);
@@ -230,7 +231,7 @@ namespace GoodAI.Modules.Harm
         {
             if (no < 0 || no >= m_childVariables.ChildIncluded.Length)
             {
-                MyLog.DEBUG.WriteLine("child index out of range!");
+                Log.Debug(this.GetType(), "child index out of range!");
                 return false;
             }
             return m_childVariables.ChildIncluded[no];
@@ -308,7 +309,7 @@ namespace GoodAI.Modules.Harm
             {
                 if (m_rds.VarManager.GetMaxVariables() > 0)
                 {
-                    MyLog.ERROR.WriteLine("Variable index (" + index +
+                    Log.Error(this.GetType(), "Variable index (" + index +
                         ") out of range of max variables! (" + m_rds.VarManager.GetMaxVariables() + ")");
                 }
                 return;
@@ -321,7 +322,7 @@ namespace GoodAI.Modules.Harm
         {
             if (index >= m_rds.VarManager.GetMaxVariables())
             {
-                MyLog.ERROR.WriteLine("Variable index out of range of max variables!");
+                Log.Error(this.GetType(), "Variable index out of range of max variables!");
                 return;
             }
             m_childVariables.ChildIncluded[index] = false;

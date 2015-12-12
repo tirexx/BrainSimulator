@@ -15,6 +15,7 @@ using ManagedCuda;
 using ManagedCuda.BasicTypes;
 using GoodAI.Modules.NeuralNetwork.Group;
 using GoodAI.Modules.NeuralNetwork.Layers;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.NeuralNetwork
 {
@@ -127,7 +128,7 @@ namespace GoodAI.Modules.NeuralNetwork
 
                     if (!Unmanaged)
                     {
-                        MyLog.DEBUG.WriteLine("Allocating: " + typeof(T).ToString() + ", " + Count * BoundedSequenceLength * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T)));
+                        Log.Debug(this.GetType(), "Allocating: " + typeof(T).ToString() + ", " + Count * BoundedSequenceLength * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T)));
                         Device[Owner.GPU] = new CudaDeviceVariable<T>(
                            MyKernelFactory.Instance.GetContextByGPU(Owner.GPU).AllocateMemory(
                            Count * BoundedSequenceLength * System.Runtime.InteropServices.Marshal.SizeOf(typeof(T))));

@@ -4,6 +4,7 @@ using GoodAI.Core.Observers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Core.Utils
@@ -228,7 +229,7 @@ namespace GoodAI.Core.Utils
                 }
                 else
                 {
-                    MyLog.WARNING.WriteLine("Unregistered module used in the project: " + node.GetType().Assembly.FullName);
+                    Log.Warn(this.GetType(), "Unregistered module used in the project: " + node.GetType().Assembly.FullName);
                 }
             };
 
@@ -276,7 +277,7 @@ namespace GoodAI.Core.Utils
                 }
                 else
                 {
-                    MyLog.ERROR.WriteLine("Referenced module not available: " + usedModule.Name);
+                    Log.Error(typeof(MyProject), "Referenced module not available: " + usedModule.Name);
                 }
             }
 
@@ -334,10 +335,10 @@ namespace GoodAI.Core.Utils
                 switch (errorLevel)
                 {
                     case YAXExceptionTypes.Error:
-                        MyLog.ERROR.WriteLine(error.Key.Message);
+                        Log.Error(typeof(MyProject), error.Key.Message);
                         break;
                     case YAXExceptionTypes.Warning:
-                        MyLog.WARNING.WriteLine(error.Key.Message);
+                        Log.Warn(typeof(MyProject), error.Key.Message);
                         break;
                     default:
                         break;

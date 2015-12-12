@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoodAI.Platform.Core.Logging;
 
 namespace GoodAI.Modules.Harm
 {
@@ -107,10 +108,10 @@ namespace GoodAI.Modules.Harm
                     {
                         if (!(a is MyStochasticReturnPredictor))
                         {
-                            MyLog.ERROR.WriteLine("Error, primitive aciton found on level > 0");
+                            Log.Error(this.GetType(), "Error, primitive aciton found on level > 0");
                             continue;
                         }
-                        //MyLog.DEBUG.WriteLine("Learning for action: " + a.getLabel());
+                        //Log.Debug(this.GetType(), "Learning for action: " + a.getLabel());
                         ((MyStochasticReturnPredictor)a).Learn();
                     }
                 }
@@ -130,10 +131,10 @@ namespace GoodAI.Modules.Harm
                     {
                         if (!(a is MyStochasticReturnPredictor))
                         {
-                            MyLog.ERROR.WriteLine("Error, primitive aciton found on level > 0");
+                            Log.Error(this.GetType(), "Error, primitive aciton found on level > 0");
                             continue;
                         }
-                        //MyLog.DEBUG.WriteLine("ASM for action: "+a.getLabel());
+                        //Log.Debug(this.GetType(), "ASM for action: "+a.getLabel());
                         ((MyStochasticReturnPredictor)a).SelectAction();
                     }
                 }
@@ -196,7 +197,7 @@ namespace GoodAI.Modules.Harm
                         }
                         else
                         {
-                            MyLog.ERROR.WriteLine("Abstract action of type another than MySRP found");
+                            Log.Error(this.GetType(), "Abstract action of type another than MySRP found");
                         }
                     }
                 }
@@ -265,17 +266,16 @@ namespace GoodAI.Modules.Harm
             int maxChildActionLevel = 0;
             if (actions.Length > m_rds.ActionManager.GetNoActions())
             {
-                MyLog.ERROR.WriteLine("Too many actions to be added, ignoring this DS!!");
+                Log.Error(this.GetType(), "Too many actions to be added, ignoring this DS!!");
                 return null;
             }
-
-            MyLog.INFO.Write("Hierarchy: action named " + label + " added, variables: ");
+            var log = "Hierarchy: action named " + label + " added, variables: ";
             MyStochasticReturnPredictor a = new MyStochasticReturnPredictor(m_rds, promotedVariable, m_learningParams, label, 0);
             for (int i = 0; i < variables.Length; i++)
             {
                 if (variables[i] == promotedVariable)
                 {
-                    //MyLog.ERROR.WriteLine("Cannot add promoted variable into the DS, ignoring this one");
+                    //Log.Error(this.GetType(), "Cannot add promoted variable into the DS, ignoring this one");
                     continue;
                 }
                 a.Ds.AddVariable(variables[i]);
@@ -287,20 +287,20 @@ namespace GoodAI.Modules.Harm
                         acs.Add(m_rds.VarManager.GetVarNo(variables[i]).MyAction.GetMyIndex());
                     }
                 }
-                MyLog.INFO.Write(" "+variables[i]);
+                log += " " + variables[i];
             }
-            MyLog.INFO.Write("\t actions: ");
+            log += "\t actions: ";
             for (int i = 0; i < acs.Count; i++)
             {
                 a.Ds.AddAction(acs[i]);
-                MyLog.INFO.Write(" " + m_rds.ActionManager.GetActionLabel(acs[i]));
+                log += " " + m_rds.ActionManager.GetActionLabel(acs[i]);
 
                 if (m_rds.ActionManager.Actions[acs[i]].GetLevel() > maxChildActionLevel)
                 {
                     maxChildActionLevel = m_rds.ActionManager.Actions[acs[i]].GetLevel();
                 }
             }
-            MyLog.INFO.WriteLine();
+            Log.Info(this.GetType(), log);
             // level is determined by the most abstract child
             a.SetLevel(maxChildActionLevel + 1);
             m_rds.ActionManager.AddAction(a);
@@ -387,7 +387,7 @@ namespace GoodAI.Modules.Harm
             List<int> chosen = new List<int>();
             foreach (var item in importances)
             {
-                MyLog.DEBUG.WriteLine("dictionary contains: " + item.Key + ": " + item.Value);
+                Log.Debug(this.GetType(), "dictionary contains: " + item.Key + ": " + item.Value);
                 if (item.Value >= m_learningParams.VariableSubspacingThreshold)
                 {
                     chosen.Add(item.Key);

@@ -4,6 +4,7 @@ using GoodAI.Core.Utils;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 
@@ -89,17 +90,17 @@ namespace GoodAI.Modules.Harm
             {
                 if (NoActions == 6)
                 {
-                    MyLog.DEBUG.WriteLine("6 actions set by the user, will use action names for gridworld");
+                    Log.Debug(this.GetType(), "6 actions set by the user, will use action names for gridworld");
                     Rds = new MyRootDecisionSpace(GlobalDataInput.Count, new String[] { " -", " <", " >", " ^", " v", " P" }, LearningParams);
                 }
                 else if (NoActions == 3)
                 {
-                    MyLog.DEBUG.WriteLine("3 actions set by the user, will use action names for pong");
+                    Log.Debug(this.GetType(), "3 actions set by the user, will use action names for pong");
                     Rds = new MyRootDecisionSpace(GlobalDataInput.Count, new String[] { " <", " -", " >" }, LearningParams);
                 }
                 else
                 {
-                    MyLog.DEBUG.WriteLine("Unknown no. of actions, will use automatic naming of actions");
+                    Log.Debug(this.GetType(), "Unknown no. of actions, will use automatic naming of actions");
                     String[] names = new String[NoActions];
                     for (int i = 0; i < NoActions; i++)
                     {
@@ -187,7 +188,7 @@ namespace GoodAI.Modules.Harm
 
                 int[] s_tt = Owner.Rds.VarManager.GetCurrentState();
                 if(s_tt.Count() != Owner.CurrentStateOutput.Count){
-                    MyLog.WARNING.WriteLine("Unexpected size of current state");
+                    Log.Warn(this.GetType(), "Unexpected size of current state");
                 }else{
                     for(int i=0; i<s_tt.Count(); i++){
                         Owner.CurrentStateOutput.Host[i] = s_tt[i];
@@ -209,7 +210,7 @@ namespace GoodAI.Modules.Harm
                     {
                         if (!warnedNegative)
                         {
-                            MyLog.DEBUG.WriteLine("WARNING: negative value on input detected, all negative values will be set to 0");
+                            Log.Debug(this.GetType(), "WARNING: negative value on input detected, all negative values will be set to 0");
                             warnedNegative = true;
                         }
                         inputs[i] = 0;
@@ -307,7 +308,7 @@ namespace GoodAI.Modules.Harm
                 
                 if (utils.Length != Owner.UtilityOutput.Count)
                 {
-                    MyLog.ERROR.WriteLine("Current utility values have different dims. that no. of actions");
+                    Log.Error(this.GetType(), "Current utility values have different dims. that no. of actions");
                 }
                 else
                 {
@@ -434,12 +435,12 @@ namespace GoodAI.Modules.Harm
 
                         if (utilities.Length != actionGlobalIndexes.Length)
                         {
-                            MyLog.DEBUG.WriteLine("ERROR: unexpected length of utilities array, will place default values");
+                            Log.Debug(this.GetType(), "ERROR: unexpected length of utilities array, will place default values");
                             utilities = new float[actionGlobalIndexes.Length];
                         }
                         else if (actionGlobalIndexes.Length == 0)
                         {
-                            MyLog.DEBUG.WriteLine("WARNING: this DS contains no actions. Will use the action 0");
+                            Log.Debug(this.GetType(), "WARNING: this DS contains no actions. Will use the action 0");
                             utilities = new float[1];
                             actionGlobalIndexes = new int[] { 0 };
                         }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using GoodAI.Platform.Core.Logging;
 using YAXLib;
 
 namespace GoodAI.Modules.Scripting
@@ -32,12 +33,12 @@ namespace GoodAI.Modules.Scripting
     ///     {
     ///         public static void Init(MyCSharpNode owner)
     ///         {
-    ///             MyLog.DEBUG.WriteLine("Init called");
+    ///             Log.Debug(this.GetType(), "Init called");
     ///         }
     /// 
     ///         public static void Execute(MyCSharpNode owner)
     ///         {
-    ///             MyLog.DEBUG.WriteLine("Execute called");
+    ///             Log.Debug(this.GetType(), "Execute called");
     /// 
     ///             float[] input = owner.GetInput(0).Host;
     ///             float[] output = owner.GetOutput(0).Host;
@@ -293,7 +294,7 @@ namespace GoodAI.Modules.Scripting
                     }
                     catch (Exception e)
                     {
-                        MyLog.WARNING.WriteLine("Script Init() call failed: " + e.GetType().Name + ": " + e.Message);
+                        Log.Warn(this.GetType(), "Script Init() call failed: " + e.GetType().Name + ": " + e.Message);
                     }
 
                     for (int i = 0; i < Owner.OutputBranches; i++)
@@ -308,7 +309,7 @@ namespace GoodAI.Modules.Scripting
                 }
                 else
                 {
-                    MyLog.WARNING.WriteLine(Owner.Name + ": No Init() method available");
+                    Log.Warn(this.GetType(), Owner.Name + ": No Init() method available");
                 }
             }
         }
@@ -346,12 +347,12 @@ namespace GoodAI.Modules.Scripting
                     }
                     catch (Exception e)
                     {
-                        MyLog.WARNING.WriteLine("Script Execute() call failed: " + e.GetType().Name + ": " + e.Message);
+                        Log.Warn(this.GetType(), "Script Execute() call failed: " + e.GetType().Name + ": " + e.Message);
                     }
                 }
                 else 
                 {
-                    MyLog.WARNING.WriteLine(Owner.Name + ": No Execute() method available");
+                    Log.Warn(this.GetType(), Owner.Name + ": No Execute() method available");
                 }
 
                 for (int i = 0; i < Owner.OutputBranches; i++)
@@ -380,12 +381,12 @@ namespace Runtime
     {
         public static void Init(MyCSharpNode owner)
         {
-            MyLog.DEBUG.WriteLine(""Init called"");
+            Log.Debug(this.GetType(), ""Init called"");
         }
         
         public static void Execute(MyCSharpNode owner)
         {
-            MyLog.DEBUG.WriteLine(""Execute called"");
+            Log.Debug(this.GetType(), ""Execute called"");
             
             float[] input = owner.GetInput(0).Host;
             float[] output = owner.GetOutput(0).Host;
