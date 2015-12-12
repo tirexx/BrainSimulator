@@ -17,7 +17,7 @@ namespace GoodAI.BrainSimulator.Forms
         private static int MAX_LINES = 1000;
         private static int ADDITIONAL_LINES_REMOVED_PER_CHECK = 50;
 
-        private class TextBoxCache : MyLogWriter
+        private class TextBoxCache : IMyLogWriter
         {
             private ConsoleForm m_consoleForm;
             
@@ -98,7 +98,7 @@ namespace GoodAI.BrainSimulator.Forms
             }
         }
 
-        private class StringBuilderCache : MyLogWriter
+        private class StringBuilderCache : IMyLogWriter
         {            
             private StringBuilder m_builder;
             private ConsoleForm m_consoleForm;

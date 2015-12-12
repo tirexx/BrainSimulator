@@ -12,7 +12,7 @@ namespace GoodAI.Core.Utils
         ERROR = 3
     };
 
-    public interface MyLogWriter
+    public interface IMyLogWriter
     {
         void WriteLine(MyLogLevel level, string message);
         void Write(MyLogLevel level, string message);
@@ -28,7 +28,7 @@ namespace GoodAI.Core.Utils
         public static MyLog ERROR { get; private set; }
 
         public static MyLogLevel Level { get; set; }
-        public static MyLogWriter Writer { get; set; }
+        public static IMyLogWriter Writer { get; set; }
 
         private MyLogLevel m_level;
 
@@ -82,7 +82,7 @@ namespace GoodAI.Core.Utils
             get { return System.Text.Encoding.UTF8; }
         }
 
-        public class MyDefaultLogWriter : MyLogWriter
+        public class MyDefaultLogWriter : IMyLogWriter
         {
             private StreamWriter m_stdOut;
 
