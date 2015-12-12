@@ -143,7 +143,7 @@ namespace GoodAI.Platform.Core.Logging
             }
         }
 
-        public static ILog GetLog(object typeOrNameForTyppedLogger)
+        private static ILog GetLog(object typeOrNameForTyppedLogger)
         {
             return LazyLogManager.Value.GetLog(typeOrNameForTyppedLogger);
         }

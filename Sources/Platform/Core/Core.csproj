@@ -109,6 +109,8 @@
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\ILogManager.cs" />
     <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\MyLog\MyLogLogManager.cs" />
+    <Compile Include="Logging\MyLog\MyLogLogWrapper.cs" />
     <Compile Include="Logging\NLog\NLogLogManager.cs" />
     <Compile Include="Logging\NLog\NLogLogWrapper.cs" />
     <Compile Include="Memory\MemoryBlockSerializer.cs" />
