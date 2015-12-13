@@ -4,8 +4,6 @@ using GoodAI.BrainSimulator.Properties;
 using GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger;
 using GoodAI.Core.Utils;
 using NLog;
-using NLog.Config;
-using NLog.Targets.Wrappers;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace GoodAI.BrainSimulator.Forms
@@ -22,15 +20,19 @@ namespace GoodAI.BrainSimulator.Forms
             MyLog.GrabConsole();
 
             logLevelStripComboBox.Items.AddRange(
-                Enumerable.Range(0, 5).Select(x => LogLevel.FromOrdinal(x).Name).ToArray());
+                Enumerable.Range(0, 6).Select(x => LogLevel.FromOrdinal(x).Name).ToArray());
             logLevelStripComboBox.SelectedIndexChanged += logLevelStripComboBox_SelectedIndexChanged;
-            logLevelStripComboBox.SelectedIndex = Settings.Default.LogLevel;
+            logLevelStripComboBox.SelectedIndex = LogLevel.FromOrdinal(Settings.Default.LogLevel).Ordinal;
         }
 
         private void logLevelStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MyLog.Level = (MyLogLevel) logLevelStripComboBox.SelectedIndex;
-            Settings.Default.LogLevel = (int) MyLog.Level;
+            if (logLevelStripComboBox.SelectedIndex >= 0)
+            {
+                var logLevel = LogLevel.FromOrdinal(logLevelStripComboBox.SelectedIndex);
+                RichTextBoxNLogConfigurator.ChangeMinLogLevel(logLevel);
+                Settings.Default.LogLevel = logLevel.Ordinal;
+            }
         }
     }
 }

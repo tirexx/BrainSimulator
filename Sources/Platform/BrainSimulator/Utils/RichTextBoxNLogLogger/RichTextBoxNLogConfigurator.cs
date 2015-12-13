@@ -1,5 +1,6 @@
 using NLog;
 using NLog.Config;
+using NLog.Targets;
 using NLog.Targets.Wrappers;
 
 namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
@@ -7,6 +8,16 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
     public static class RichTextBoxNLogConfigurator
     {
         private static LoggingRule _loggingRule;
+        private static readonly LogLevel MaxLogLevel = LogLevel.FromString("Fatal");
+        private static Target _asyncWrapper;
+
+        public static void ChangeMinLogLevel(LogLevel logLevel)
+        {
+            LogManager.Configuration.LoggingRules.Remove(_loggingRule);
+            _loggingRule = new LoggingRule("*", logLevel, _asyncWrapper);
+            LogManager.Configuration.LoggingRules.Insert(0, _loggingRule);
+            LogManager.ReconfigExistingLoggers();
+        }
 
         public static void ConfigureRichTextTarget(string controlName, string formName)
         {
@@ -18,15 +29,14 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
                 ControlName = controlName,
                 FormName = formName,
                 MaxLines = 1000,
-                UseDefaultRowColoringRules = true,
+                UseDefaultRowColoringRules = true
             };
 
-            var asyncWrapper = new AsyncTargetWrapper { Name = "RichTextAsync", WrappedTarget = target };
+            _asyncWrapper = new AsyncTargetWrapper {Name = "RichTextAsync", WrappedTarget = target};
 
-            LogManager.Configuration.AddTarget(asyncWrapper.Name, asyncWrapper);
-            _loggingRule = new LoggingRule("*", LogLevel.FromString("Info"), asyncWrapper);
-            LogManager.Configuration.LoggingRules.Insert(0,
-                _loggingRule);
+            LogManager.Configuration.AddTarget(_asyncWrapper.Name, _asyncWrapper);
+            _loggingRule = new LoggingRule("*", LogLevel.FromString("Info"), _asyncWrapper);
+            LogManager.Configuration.LoggingRules.Insert(0, _loggingRule);
             LogManager.ReconfigExistingLoggers();
         }
     }
