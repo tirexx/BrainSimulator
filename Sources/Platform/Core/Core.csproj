@@ -123,8 +123,6 @@
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\ILogManager.cs" />
     <Compile Include="Logging\Log.cs" />
-    <Compile Include="Logging\MyLog\MyLogLogManager.cs" />
-    <Compile Include="Logging\MyLog\MyLogLogWrapper.cs" />
     <Compile Include="Logging\NLog\NLogLogManager.cs" />
     <Compile Include="Logging\NLog\NLogLogWrapper.cs" />
     <Compile Include="Memory\MemoryBlockSerializer.cs" />
@@ -178,7 +176,6 @@
     <Compile Include="Transforms\MyTransform.cs" />
     <Compile Include="Utils\MyAttributeExtension.cs" />
     <Compile Include="Utils\MyAttributes.cs" />
-    <Compile Include="Utils\Log.cs" />
     <Compile Include="Configuration\MyConfiguration.cs" />
     <Compile Include="Utils\MyLocation.cs" />
     <Compile Include="Utils\MyProject.cs" />

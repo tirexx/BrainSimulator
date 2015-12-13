@@ -4,8 +4,7 @@ using GoodAI.Core.Utils;
 using ManagedCuda;
 using ManagedCuda.CudaBlas;
 using System;
-
-
+using GoodAI.Platform.Core.Logging;
 
 
 namespace GoodAI.Modules.Matrix
@@ -92,7 +91,7 @@ namespace GoodAI.Modules.Matrix
                        beta, Result, 1);
                     break;
                 default:
-                    MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run cublas for undefined MatOperation");
+                    Log.Error(this.GetType(), "Trying to run cublas for undefined MatOperation");
                     break;
             }
         }
@@ -124,7 +123,7 @@ namespace GoodAI.Modules.Matrix
                     Run(operation, A.GetDevice(callee), A.Count, A.ColumnHint, B.GetDevice(callee), B.Count, B.ColumnHint, Result.GetDevice(callee), Result.Count, Result.ColumnHint, 0);
                     break;
                 default:
-                    MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run cublas for undefined MatOperation");
+                    Log.Error(this.GetType(), "Trying to run cublas for undefined MatOperation");
                     break;
             }
         }
@@ -158,7 +157,7 @@ namespace GoodAI.Modules.Matrix
                     MyCublasFactory.Instance.Copy(A.GetDevice(callee), 1, Result.GetDevice(callee), 1);
                     break;
                 default:
-                    MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run cublas for undefined MatOperation");
+                    Log.Error(this.GetType(), "Trying to run cublas for undefined MatOperation");
                     break;
             }
         }
@@ -175,7 +174,7 @@ namespace GoodAI.Modules.Matrix
                     MyCublasFactory.Instance.Scale(1 / nrm, A.GetDevice(callee), 1);
                     break;
                 default:
-                    MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run cublas for undefined MatOperation");
+                    Log.Error(this.GetType(), "Trying to run cublas for undefined MatOperation");
                     break;
             }
         }
@@ -190,7 +189,7 @@ namespace GoodAI.Modules.Matrix
                     MyCublasFactory.Instance.Axpy(value, A.GetDevice(callee), 1, Result.GetDevice(callee), 1);
                     break;
                 default:
-                    MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run cublas for undefined MatOperation");
+                    Log.Error(this.GetType(), "Trying to run cublas for undefined MatOperation");
                     break;
             }
         }

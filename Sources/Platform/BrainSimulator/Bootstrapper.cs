@@ -1,6 +1,5 @@
 ﻿using System;
 using GoodAI.Platform.Core.Logging;
-using GoodAI.Platform.Core.Logging.MyLog;
 using GoodAI.Platform.Core.Logging.NLog;
 using GoodAI.Platform.Core.Unity;
 using Microsoft.Practices.Unity;

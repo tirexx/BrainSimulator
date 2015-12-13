@@ -2,6 +2,7 @@
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using System;
+using GoodAI.Platform.Core.Logging;
 
 
 namespace GoodAI.Modules.Matrix
@@ -64,7 +65,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run undefined MatOps");
+                Log.Error(this.GetType(), "Trying to run undefined MatOps");
             }
         }
 
@@ -81,7 +82,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run undefined MatOps");
+                Log.Error(this.GetType(), "Trying to run undefined MatOps");
             }
         }
 
@@ -98,7 +99,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run undefined MatOps");
+                Log.Error(this.GetType(), "Trying to run undefined MatOps");
             }
         }
 
@@ -114,7 +115,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run undefined MatOps");
+                Log.Error(this.GetType(), "Trying to run undefined MatOps");
             }
         }
 

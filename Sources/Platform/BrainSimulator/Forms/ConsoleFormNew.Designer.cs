@@ -19,8 +19,6 @@ namespace GoodAI.BrainSimulator.Forms
                 components.Dispose();
             }
 
-            MyLog.Writer = new MyLog.MyDefaultLogWriter();
-
             base.Dispose(disposing);
         }
 

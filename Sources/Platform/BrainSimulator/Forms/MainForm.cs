@@ -408,9 +408,9 @@ namespace GoodAI.BrainSimulator.Forms
             {
                 (dockPanel.ActiveDocument as TextEditForm).CopyText();
             }
-            else if (dockPanel.ActiveContent is ConsoleForm)
+            else if (dockPanel.ActiveContent is ConsoleFormNew)
             {
-                Clipboard.SetText((dockPanel.ActiveContent as ConsoleForm).textBox.SelectedText);
+                Clipboard.SetText((dockPanel.ActiveContent as ConsoleFormNew).textBox.SelectedText);
                 return;
             }
             else if (dockPanel.ActiveDocument is GraphLayoutForm)

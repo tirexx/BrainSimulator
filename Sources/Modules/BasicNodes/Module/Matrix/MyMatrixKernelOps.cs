@@ -3,6 +3,7 @@ using GoodAI.Core.Memory;
 using GoodAI.Core.Nodes;
 using GoodAI.Core.Utils;
 using System.Collections.Generic;
+using GoodAI.Platform.Core.Logging;
 
 
 namespace GoodAI.Modules.Matrix
@@ -80,7 +81,7 @@ namespace GoodAI.Modules.Matrix
             }
             if (operations > 0 && OpersKerlsDictionary.Count == 0)
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to init kernel MatrixOps for undefined MatOperation");
+                Log.Error(this.GetType(), "Trying to init kernel MatrixOps for undefined MatOperation");
             }
         }
 
@@ -133,7 +134,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run kernel MatrixOps for uninitialized kernel");
+                Log.Error(this.GetType(), "Trying to run kernel MatrixOps for uninitialized kernel");
             }
         }
 
@@ -181,7 +182,7 @@ namespace GoodAI.Modules.Matrix
             }
             else
             {
-                MyLog.Writer.WriteLine(MyLogLevel.ERROR, "Trying to run kernel MatrixOps for uninitialized kernel");
+                Log.Error(this.GetType(), "Trying to run kernel MatrixOps for uninitialized kernel");
             }
         }
 
