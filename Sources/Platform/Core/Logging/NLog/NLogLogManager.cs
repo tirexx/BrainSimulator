@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NLog;
 
 namespace GoodAI.Platform.Core.Logging.NLog
@@ -19,9 +15,9 @@ namespace GoodAI.Platform.Core.Logging.NLog
             var type = typeOrNameForTyppedLogger as Type;
 
             var log = type != null
-                          ? LogManager.GetLogger(type.FullName, type)
-                          : LogManager.GetLogger(typeOrNameForTyppedLogger.ToString());
-            
+                ? LogManager.GetLogger(type.FullName)
+                : LogManager.GetLogger(typeOrNameForTyppedLogger.ToString());
+
             return new NLogLogWrapper(log);
         }
     }
