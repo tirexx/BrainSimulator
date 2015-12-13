@@ -643,7 +643,7 @@ namespace GoodAI.BrainSimulator.Forms
             SimulationHandler.ProgressChanged += SimulationHandler_ProgressChanged;
 
             // must be created in advance to grab possible error logs
-            ConsoleView = new ConsoleFormNew(this);
+            ConsoleView = new ConsoleFormNew();
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName();
             Log.Info(this.GetType(), assemblyName.Name + " version " + assemblyName.Version);

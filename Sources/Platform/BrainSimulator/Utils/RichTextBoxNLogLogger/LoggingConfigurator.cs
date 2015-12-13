@@ -1,3 +1,5 @@
+using System;
+using GoodAI.Platform.Core.Logging;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -5,10 +7,9 @@ using NLog.Targets.Wrappers;
 
 namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 {
-    public static class RichTextBoxNLogConfigurator
+    public static class LoggingConfigurator
     {
         private static LoggingRule _loggingRule;
-        private static readonly LogLevel MaxLogLevel = LogLevel.FromString("Fatal");
         private static Target _asyncWrapper;
 
         public static void ChangeMinLogLevel(LogLevel logLevel)
@@ -17,6 +18,11 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
             _loggingRule = new LoggingRule("*", logLevel, _asyncWrapper);
             LogManager.Configuration.LoggingRules.Insert(0, _loggingRule);
             LogManager.ReconfigExistingLoggers();
+        }
+
+        public static void ConfigureConsoleOutputToLogRedirection()
+        {
+            Console.SetOut(new ConsoleOutputToLogConvertor());
         }
 
         public static void ConfigureRichTextTarget(string controlName, string formName)

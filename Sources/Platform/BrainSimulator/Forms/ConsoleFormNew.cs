@@ -10,14 +10,9 @@ namespace GoodAI.BrainSimulator.Forms
 {
     public partial class ConsoleFormNew : DockContent
     {
-        private MainForm m_mainForm;
-
-        public ConsoleFormNew(MainForm mainForm)
+        public ConsoleFormNew()
         {
             InitializeComponent();
-            m_mainForm = mainForm;
-
-            MyLog.GrabConsole();
 
             logLevelStripComboBox.Items.AddRange(
                 Enumerable.Range(0, 6).Select(x => LogLevel.FromOrdinal(x).Name).ToArray());
@@ -30,7 +25,7 @@ namespace GoodAI.BrainSimulator.Forms
             if (logLevelStripComboBox.SelectedIndex >= 0)
             {
                 var logLevel = LogLevel.FromOrdinal(logLevelStripComboBox.SelectedIndex);
-                RichTextBoxNLogConfigurator.ChangeMinLogLevel(logLevel);
+                LoggingConfigurator.ChangeMinLogLevel(logLevel);
                 Settings.Default.LogLevel = logLevel.Ordinal;
             }
         }

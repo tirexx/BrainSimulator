@@ -14,7 +14,8 @@ namespace GoodAI.BrainSimulator
         private static void Main()
         {
             new Bootstrapper().Start();
-            RichTextBoxNLogConfigurator.ConfigureRichTextTarget("textBox", "ConsoleFormNew");
+            LoggingConfigurator.ConfigureRichTextTarget("textBox", "ConsoleFormNew");
+            LoggingConfigurator.ConfigureConsoleOutputToLogRedirection();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

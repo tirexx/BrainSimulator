@@ -237,7 +237,7 @@
     <Compile Include="Forms\ValidationForm.Designer.cs">
       <DependentUpon>ValidationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\RichTextBoxNLogLogger\RichTextBoxNLogConfigurator.cs" />
+    <Compile Include="Utils\RichTextBoxNLogLogger\LoggingConfigurator.cs" />
     <Compile Include="Utils\RichTextBoxNLogLogger\RichTextBoxRowColoringRule.cs" />
     <Compile Include="Utils\RichTextBoxNLogLogger\RichTextBoxNLogTarget.cs" />
     <Compile Include="Nodes\MySignalItem.cs" />
