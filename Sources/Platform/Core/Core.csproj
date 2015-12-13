@@ -119,7 +119,7 @@
     <Compile Include="Execution\MyExecutionPlanner.cs" />
     <Compile Include="Execution\MyPartitionStrategy.cs" />
     <Compile Include="Execution\MyTaskExecutor.cs" />
-    <Compile Include="Logging\ConsoleOutputToLogConvertor.cs" />
+    <Compile Include="Logging\ConsoleOutputToLogRedirector.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\ILogManager.cs" />
     <Compile Include="Logging\Log.cs" />

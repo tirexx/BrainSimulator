@@ -22,7 +22,7 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 
         public static void ConfigureConsoleOutputToLogRedirection()
         {
-            Console.SetOut(new ConsoleOutputToLogConvertor());
+            Console.SetOut(new ConsoleOutputToLogRedirector());
         }
 
         public static void ConfigureRichTextTarget(string controlName, string formName)

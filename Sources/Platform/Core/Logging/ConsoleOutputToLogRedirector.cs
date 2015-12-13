@@ -3,7 +3,7 @@ using System.Text;
 
 namespace GoodAI.Platform.Core.Logging
 {
-    public class ConsoleOutputToLogConvertor : TextWriter
+    public class ConsoleOutputToLogRedirector : TextWriter
     {
         private const string LoggerName = "Console";
 
