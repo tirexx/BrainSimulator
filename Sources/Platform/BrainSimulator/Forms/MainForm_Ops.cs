@@ -244,7 +244,7 @@ namespace GoodAI.BrainSimulator.Forms
         public TaskPropertyForm TaskPropertyView { get; private set; }
 
         private GraphLayoutForm NetworkView { get; set; }
-        public ConsoleForm ConsoleView { get; private set; }
+        public ConsoleFormNew ConsoleView { get; private set; }
         public ValidationForm ValidationView { get; private set; }
         public NodeHelpForm HelpView { get; private set; }
 
@@ -643,7 +643,8 @@ namespace GoodAI.BrainSimulator.Forms
             SimulationHandler.ProgressChanged += SimulationHandler_ProgressChanged;
 
             // must be created in advance to grab possible error logs
-            ConsoleView = new ConsoleForm(this);
+            ConsoleView = new ConsoleFormNew(this);
+            ConsoleView.ConfigureNlogRichTextTarget();
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName();
             Log.Info(this.GetType(), assemblyName.Name + " version " + assemblyName.Version);

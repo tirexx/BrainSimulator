@@ -4,6 +4,7 @@ using System.Text;
 
 namespace GoodAI.Core.Utils
 {
+    [Obsolete]
     public enum MyLogLevel 
     {
         DEBUG = 0,
@@ -12,6 +13,7 @@ namespace GoodAI.Core.Utils
         ERROR = 3
     };
 
+    [Obsolete]
     public interface IMyLogWriter
     {
         void WriteLine(MyLogLevel level, string message);
@@ -20,6 +22,7 @@ namespace GoodAI.Core.Utils
         void FlushCache();
     }
 
+    [Obsolete]
     public class MyLog : TextWriter
     {
         [Obsolete("Use Log.Debug instead.")]
