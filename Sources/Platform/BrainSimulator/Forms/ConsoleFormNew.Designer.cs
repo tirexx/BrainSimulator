@@ -96,7 +96,6 @@ namespace GoodAI.BrainSimulator.Forms
             this.Name = "ConsoleFormNew";
             this.Padding = new System.Windows.Forms.Padding(10, 3, 3, 3);
             this.Text = "Console";
-            this.Load += new System.EventHandler(this.ConsoleFormNew_Load_1);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ResumeLayout(false);

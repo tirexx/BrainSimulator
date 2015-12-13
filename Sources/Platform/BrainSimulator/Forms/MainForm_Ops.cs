@@ -644,7 +644,6 @@ namespace GoodAI.BrainSimulator.Forms
 
             // must be created in advance to grab possible error logs
             ConsoleView = new ConsoleFormNew(this);
-            ConsoleView.ConfigureNlogRichTextTarget();
 
             var assemblyName = Assembly.GetExecutingAssembly().GetName();
             Log.Info(this.GetType(), assemblyName.Name + " version " + assemblyName.Version);

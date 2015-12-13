@@ -3,13 +3,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
-using GoodAI.BrainSimulator.Utils.WpfRichTextBoxLogger;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 
-namespace GoodAI.BrainSimulator.Helper
+namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 {
     [Target("RichTextBox")]
     public sealed class RichTextBoxNLogTarget : TargetWithLayout
@@ -17,7 +17,7 @@ namespace GoodAI.BrainSimulator.Helper
         private static readonly TypeConverter ColorConverter = new ColorConverter();
 
         private static readonly int ADDITIONAL_LINES_REMOVED_PER_CHECK = 50;
-        private int _lineCount;
+        private readonly object _controlSync = new object();
 
         static RichTextBoxNLogTarget()
         {
@@ -55,23 +55,14 @@ namespace GoodAI.BrainSimulator.Helper
         [ArrayParameter(typeof (RichTextBoxRowColoringRule), "row-coloring")]
         public IList<RichTextBoxRowColoringRule> RowColoringRules { get; private set; }
 
-        //[ArrayParameter(typeof (WpfRichTextBoxWordColoringRule), "word-coloring")]
-        //public IList<WpfRichTextBoxWordColoringRule> WordColoringRules { get; private set; }
-
         [DefaultValue(true)]
         public bool ToolWindow { get; set; }
 
-        public bool ShowMinimized { get; set; }
-
-        public int Width { get; set; } = 500;
-
-        public int Height { get; set; } = 500;
-
         public int MaxLines { get; set; }
 
-        public Form TargetForm { get; set; }
+        private Form TargetForm { get; set; }
 
-        public RichTextBox TargetRichTextBox { get; set; }
+        private RichTextBox TargetRichTextBox { get; set; }
 
         protected override void InitializeTarget()
         {
@@ -79,6 +70,8 @@ namespace GoodAI.BrainSimulator.Helper
 
         protected override void Write(LogEventInfo logEvent)
         {
+            EnsureControl();
+
             RichTextBoxRowColoringRule matchingRule =
                 RowColoringRules.FirstOrDefault(rr => rr.CheckCondition(logEvent));
 
@@ -101,6 +94,43 @@ namespace GoodAI.BrainSimulator.Helper
             TargetRichTextBox.Invoke((MethodInvoker) delegate { SendTheMessageToRichTextBox(logMessage, matchingRule); });
         }
 
+        private void EnsureControl()
+        {
+            FindControl();
+            while (TargetForm == null || TargetRichTextBox == null)
+            {
+                Thread.Sleep(100);
+                FindControl();
+            }
+        }
+
+        private void FindControl()
+        {
+            if (TargetForm == null)
+            {
+                lock (_controlSync)
+                {
+                    if (TargetForm == null)
+                    {
+                        TargetForm = Application.OpenForms[FormName];
+                    }
+                }
+            }
+
+            if (TargetForm != null)
+            {
+                if (TargetRichTextBox == null)
+                {
+                    lock (_controlSync)
+                    {
+                        if (TargetRichTextBox == null)
+                        {
+                            TargetRichTextBox = TargetForm.Controls[ControlName] as RichTextBox;
+                        }
+                    }
+                }
+            }
+        }
 
         private static Color GetColorFromString(string color)
         {

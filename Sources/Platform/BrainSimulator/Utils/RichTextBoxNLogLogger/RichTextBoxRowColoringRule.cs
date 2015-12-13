@@ -4,7 +4,7 @@ using NLog;
 using NLog.Conditions;
 using NLog.Config;
 
-namespace GoodAI.BrainSimulator.Utils.WpfRichTextBoxLogger
+namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 {
     [NLogConfigurationItem]
     public class RichTextBoxRowColoringRule
