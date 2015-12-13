@@ -19,17 +19,19 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
         {
         }
 
-        public RichTextBoxRowColoringRule(string condition, string fontColor, string backColor, FontStyle fontStyle)
+        public RichTextBoxRowColoringRule(/*string condition, */LogLevel level, string fontColor, string backColor, FontStyle fontStyle)
         {
-            Condition = condition;
+            //Condition = condition;
+            Level = level;
             FontColor = fontColor;
             BackgroundColor = backColor;
             Style = fontStyle;
         }
 
-        public RichTextBoxRowColoringRule(string condition, string fontColor, string backColor)
+        public RichTextBoxRowColoringRule(/*string condition, */LogLevel level, string fontColor, string backColor)
         {
-            Condition = condition;
+            //Condition = condition;
+            Level = level;
             FontColor = fontColor;
             BackgroundColor = backColor;
             Style = FontStyle.Regular;
@@ -37,8 +39,11 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 
         public static RichTextBoxRowColoringRule Default { get; private set; }
 
+        //[RequiredParameter]
+        //public ConditionExpression Condition { get; set; }
+
         [RequiredParameter]
-        public ConditionExpression Condition { get; set; }
+        public LogLevel Level { get; set; }
 
         [DefaultValue("Empty")]
         public string FontColor { get; set; }
@@ -48,9 +53,14 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
 
         public FontStyle Style { get; set; }
 
-        public bool CheckCondition(LogEventInfo logEvent)
+        //public bool CheckCondition(LogEventInfo logEvent)
+        //{
+        //    return true.Equals(Condition.Evaluate(logEvent));
+        //}
+
+        public bool CheckLevel(LogEventInfo logEvent)
         {
-            return true.Equals(Condition.Evaluate(logEvent));
+            return logEvent.Level.CompareTo(Level) == 0;
         }
     }
 }

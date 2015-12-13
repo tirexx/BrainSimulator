@@ -20,6 +20,7 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
                 MaxLines = 1000,
                 UseDefaultRowColoringRules = true,
             };
+
             var asyncWrapper = new AsyncTargetWrapper { Name = "RichTextAsync", WrappedTarget = target };
 
             LogManager.Configuration.AddTarget(asyncWrapper.Name, asyncWrapper);

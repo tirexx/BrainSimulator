@@ -23,14 +23,14 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
         {
             var rules = new List<RichTextBoxRowColoringRule>
             {
-                new RichTextBoxRowColoringRule("level == LogLevel.Fatal", "White", "Red",
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Fatal"), "White", "Red",
                     FontStyle.Regular | FontStyle.Bold),
-                new RichTextBoxRowColoringRule("level == LogLevel.Error", "Red", "Empty",
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Error"), "Red", "Empty",
                     FontStyle.Italic | FontStyle.Bold),
-                new RichTextBoxRowColoringRule("level == LogLevel.Warn", "Orange", "Empty"),
-                new RichTextBoxRowColoringRule("level == LogLevel.Info", "Black", "Empty"),
-                new RichTextBoxRowColoringRule("level == LogLevel.Debug", "Gray", "Empty"),
-                new RichTextBoxRowColoringRule("level == LogLevel.Trace", "DarkGray", "Empty", FontStyle.Italic)
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Warn"), "Orange", "Empty"),
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Info"), "Black", "Empty"),
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Debug"), "Gray", "Empty"),
+                new RichTextBoxRowColoringRule(LogLevel.FromString("Trace"), "DarkGray", "Empty", FontStyle.Italic)
             };
 
             DefaultRowColoringRules = rules.AsReadOnly();
@@ -73,11 +73,11 @@ namespace GoodAI.BrainSimulator.Utils.RichTextBoxNLogLogger
             EnsureControl();
 
             RichTextBoxRowColoringRule matchingRule =
-                RowColoringRules.FirstOrDefault(rr => rr.CheckCondition(logEvent));
+                RowColoringRules.FirstOrDefault(rr => rr.CheckLevel(logEvent));
 
             if (UseDefaultRowColoringRules && matchingRule == null)
             {
-                foreach (var rr in DefaultRowColoringRules.Where(rr => rr.CheckCondition(logEvent)))
+                foreach (var rr in DefaultRowColoringRules.Where(rr => rr.CheckLevel(logEvent)))
                 {
                     matchingRule = rr;
                     break;
